@@ -1,17 +1,18 @@
+/**
+ * @author James Chan (Zhuojian Chen)
+ */
+
 #include <iostream>
 #include <filesystem>
-#include "assignment/1/helper.h"
-#include "assignment/1/generateData.h"
-#include "assignment/1/readData.h"
+#include "helper.h"
+#include "generateData.h"
+#include "readData.h"
+#include "constant.h"
 
 using namespace std;
 
 int main() {
     srand(time(nullptr));   // set the global random seed
-
-    const string NAME = "JamesChan";    // my preferred name (my legal name is "ZhuojianChen")
-    const int ROW_LENGTH = 20;
-
     string filename = NAME + ".txt";    // filename of the data file
 
     // generate data
@@ -22,18 +23,6 @@ int main() {
 
     // read data
     int **matrix = readData(filename);
-
-    // find the maximum and minimum value in the array
-//    int maxNum = matrix[0][0], minNum = matrix[0][0];
-//    for (int row = 0; row < rowNum; ++row) {
-//        for (int col = 0; col < ROW_LENGTH; ++col) {
-//            int num = matrix[row][col];
-//            if (num > maxNum) maxNum = num;
-//            if (num < minNum) minNum = num;
-//        }
-//    }
-//    cout << "The maximum value of the array is: " << maxNum << "." << endl;
-//    cout << "The minimum value of the array is: " << minNum << "." << endl;
 
     // find the maximum and minimum value of each row
     int maxArray[125], minArray[125];
@@ -47,9 +36,7 @@ int main() {
     // find the number of zeros in the file
     int numberOfZero = 0;
     for (int row = 0; row < rowNum; ++row) {
-        for (int col = 0; col < ROW_LENGTH; ++col) {
-            if (matrix[row][col] == 0) numberOfZero++;
-        }
+        numberOfZero += count(matrix[row], ROW_LENGTH, 0);
     }
     cout << "There are " << numberOfZero << " zeros in the file." << endl;
 

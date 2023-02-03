@@ -1,3 +1,7 @@
+/**
+ * @author James Chan (Zhuojian Chen)
+ */
+
 #ifndef BHCC_CPP_HELPER_H
 #define BHCC_CPP_HELPER_H
 

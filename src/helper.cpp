@@ -1,4 +1,10 @@
+/**
+ * @author James Chan (Zhuojian Chen)
+ */
+
+#include <fstream>
 #include "helper.h"
+#include "constant.h"
 
 using namespace std;
 
@@ -81,11 +87,17 @@ int sum(int array[], int length) {
     return sum;
 }
 
+/**
+ * Converts an integer array to a string
+ * @param array the array to convert
+ * @param length the length of the array
+ * @return
+ */
 string arrayToString(int *array, int length) {
     string str = to_string(array[0]);
 
     for (int i = 1; i < length; ++i) {
-        str += " " + to_string(array[i]);
+        str += ", " + to_string(array[i]);
     }
 
     return str;
@@ -99,9 +111,13 @@ string arrayToString(int *array, int length) {
  */
 void print2DArray(int **array, int rowNum, int colNum) {
     for (int row = 0; row < rowNum; ++row) {
-        cout << "[" << row << "] ";
+        string label("[");
+        label.append(to_string(row));
+        label.append("]");
+
+        cout << setw(5) << label;
         for (int col = 0; col < colNum; ++col) {
-            cout << array[row][col] << ' ';
+            cout << setw(CELL_WIDTH) << array[row][col];
         }
 
         cout << endl;

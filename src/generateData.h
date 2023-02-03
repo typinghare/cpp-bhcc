@@ -1,3 +1,7 @@
+/**
+ * @author James Chan (Zhuojian Chen)
+ */
+
 #include <iostream>
 
 #ifndef BHCC_CPP_GENERATEDATA_H
@@ -9,4 +13,4 @@ int *generateRow();
 
 int generateData(const std::string filename);
 
-#endif //BHCC_CPP_GENERATEDATA_H
+#endif

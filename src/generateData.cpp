@@ -1,21 +1,30 @@
+/**
+ * @author James Chan (Zhuojian Chen)
+ */
+
 #include <fstream>
 #include "generateData.h"
 #include "helper.h"
+#include "constant.h"
 
 using namespace std;
 
+/**
+ * Generates random data and output them into the target file.
+ * @param filename filename/filepath of the target file
+ * @return
+ */
 int generateData(const string filename) {
     // create and open a text file
     ofstream fileOutputStream(filename);
 
-    const int ROW_LENGTH{20};
-    int rowNumber = generateInt(30, 125);
+    int rowNumber = generateInt(MIN_ROW_NUMBER, MAX_ROW_NUMBER);
     for (int i = 0; i < rowNumber; ++i) {
         int *row = generateRow();
         for (int j = 0; j < ROW_LENGTH; ++j) {
-            fileOutputStream << setw(5) << row[j];
+            fileOutputStream << setw(CELL_WIDTH) << row[j];
         }
-        fileOutputStream << setw(5) << sum(row, ROW_LENGTH) << endl;
+        fileOutputStream << setw(CELL_WIDTH) << sum(row, ROW_LENGTH) << endl;
     }
 
     fileOutputStream.close();
@@ -34,15 +43,14 @@ int generateInt(int lowerBound, int upperBound) {
 }
 
 /**
- * Generates an integer array of length 20.
- * @return an integer array of length 20
+ * Generates a row.
+ * @return a row
  */
 int *generateRow() {
-    const int ROW_LENGTH{20};
     static int row[ROW_LENGTH];
 
     for (int i = 0; i < ROW_LENGTH; i++) {
-        row[i] = generateInt(-50, 50);
+        row[i] = generateInt(RAND_NUMBER_LOWER_BOUND, RAND_NUMBER_UPPER_BOUND + 1);
     }
 
     return row;
