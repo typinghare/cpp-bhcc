@@ -6,7 +6,8 @@
 #define BHCC_CPP_READDATA_H
 
 #include <iostream>
+#include "constant.h"
 
-int** readData(std::string filename);
+int (*readData(std::string filename))[ROW_LENGTH];
 
 #endif

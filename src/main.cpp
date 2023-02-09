@@ -22,7 +22,7 @@ int main() {
          << "(" << filesystem::absolute(filesystem::path(filename)) << ")" << endl;
 
     // read data
-    int **matrix = readData(filename);
+    int(*matrix)[ROW_LENGTH] = readData(filename);
 
     // find the maximum and minimum value of each row
     int maxArray[125], minArray[125];
@@ -30,8 +30,12 @@ int main() {
         maxArray[row] = maxOfArray(matrix[row], ROW_LENGTH);
         minArray[row] = minOfArray(matrix[row], ROW_LENGTH);
     }
-    cout << "The maximum values of each row of the array: " << arrayToString(maxArray, ROW_LENGTH) << endl;
-    cout << "The minimum values of each row of the array: " << arrayToString(minArray, ROW_LENGTH) << endl;
+    cout << "The maximum value of each row of the array: " << arrayToString(maxArray, rowNum) << endl;
+    cout << "The minimum value of each row of the array: " << arrayToString(minArray, rowNum) << endl;
+
+    // find the maximum and minimum value of the whole data file
+    cout << "The maximum value of the data file: " << maxOfArray(maxArray, rowNum) << endl;
+    cout << "The minimum value of the data file: " << minOfArray(minArray, rowNum) << endl;
 
     // find the number of zeros in the file
     int numberOfZero = 0;
@@ -42,5 +46,5 @@ int main() {
 
     // print data
     cout << "The following is the generated two dimensional array:" << endl;
-    print2DArray(matrix, rowNum, ROW_LENGTH);
+    print2DArray(matrix, rowNum, cout);
 }

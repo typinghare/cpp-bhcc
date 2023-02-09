@@ -15,7 +15,7 @@ using namespace std;
  * @param number the number to find
  * @return the number of times a specified number occurs in the array
  */
-int count(const int array[], int length, int number) {
+int count(int array[], int length, int number) {
     int count = 0;
     for (int i = 0; i < length; i++) {
         if (array[i] == number) count++;
@@ -30,7 +30,7 @@ int count(const int array[], int length, int number) {
  * @param length the length of the array
  * @return the maximum value of the given array.
  */
-double maxOfArray(const double array[], int length) {
+double maxOfArray(double array[], int length) {
     double max = array[0];
 
     for (int i = 1; i < length; i++) {
@@ -46,7 +46,7 @@ double maxOfArray(const double array[], int length) {
  * @param length the length of the array
  * @return the maximum value of the given array.
  */
-int maxOfArray(const int array[], int length) {
+int maxOfArray(int array[], int length) {
     int max = array[0];
 
     for (int i = 1; i < length; i++) {
@@ -62,7 +62,7 @@ int maxOfArray(const int array[], int length) {
  * @param length the length of the array
  * @return the minimum value of the given array.
  */
-int minOfArray(const int array[], int length) {
+int minOfArray(int array[], int length) {
     int min = array[0];
 
     for (int i = 1; i < length; i++) {
@@ -93,7 +93,7 @@ int sum(int array[], int length) {
  * @param length the length of the array
  * @return
  */
-string arrayToString(int *array, int length) {
+string arrayToString(int array[], int length) {
     string str = to_string(array[0]);
 
     for (int i = 1; i < length; ++i) {
@@ -104,22 +104,19 @@ string arrayToString(int *array, int length) {
 }
 
 /**
- * Prints a two dimensional array.
+ * Prints a two-dimensional array.
  * @param array the array to print
  * @param rowNum the number of row in the array
- * @param colNum the number of column in the array
  */
-void print2DArray(int **array, int rowNum, int colNum) {
+void print2DArray(int array[][ROW_LENGTH], int rowNum, ostream &os) {
     for (int row = 0; row < rowNum; ++row) {
-        string label("[");
-        label.append(to_string(row));
-        label.append("]");
+        string label = string("[") + to_string(row) + "]";
 
-        cout << setw(5) << label;
-        for (int col = 0; col < colNum; ++col) {
-            cout << setw(CELL_WIDTH) << array[row][col];
+        os << setw(5) << label;
+        for (int col = 0; col < ROW_LENGTH; ++col) {
+            os << setw(CELL_WIDTH) << array[row][col];
         }
 
-        cout << endl;
+        os << endl;
     }
 }

@@ -14,7 +14,7 @@ using namespace std;
  * @param filename filename/filepath of the target file
  * @return
  */
-int generateData(const string filename) {
+int generateData(string filename) {
     // create and open a text file
     ofstream fileOutputStream(filename);
 

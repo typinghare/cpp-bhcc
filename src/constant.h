@@ -5,6 +5,8 @@
 #ifndef BHCC_CPP_CONSTANT_H
 #define BHCC_CPP_CONSTANT_H
 
+#include <string>
+
 /**
  * Defines global constants in this header file.
  */

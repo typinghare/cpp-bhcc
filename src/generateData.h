@@ -11,6 +11,6 @@ int generateInt(int lowerBound, int upperBound);
 
 int *generateRow();
 
-int generateData(const std::string filename);
+int generateData(std::string filename);
 
 #endif

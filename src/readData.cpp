@@ -13,14 +13,12 @@ using namespace std;
 /**
  * Reads the target file and return a data matrix.
  * @param filename filename/filepath of the target file
+ * @note Not using the dynamic 2d array; use static 2d array instead
  * @return
  */
-int **readData(string filename) {
+int (*readData(string filename))[ROW_LENGTH] {
     // create a 125x20 2D array
-    int **matrix = new int *[MAX_ROW_NUMBER];
-    for (int i = 0; i < MAX_ROW_NUMBER; ++i) {
-        matrix[i] = new int[ROW_LENGTH];
-    }
+    static int matrix[MAX_ROW_NUMBER][ROW_LENGTH];
 
     ifstream fileInputStream(filename);
 
