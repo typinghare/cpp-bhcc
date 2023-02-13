@@ -105,16 +105,16 @@ string arrayToString(int array[], int length) {
 
 /**
  * Prints a two-dimensional array.
- * @param array the array to print
+ * @param matrix the two-dimensional array to print
  * @param rowNum the number of row in the array
  */
-void print2DArray(int array[][ROW_LENGTH], int rowNum, ostream &os) {
+void print2DArray(int matrix[][ROW_LENGTH], int rowNum, ostream &os) {
     for (int row = 0; row < rowNum; ++row) {
         string label = string("[") + to_string(row) + "]";
 
         os << setw(5) << label;
         for (int col = 0; col < ROW_LENGTH; ++col) {
-            os << setw(CELL_WIDTH) << array[row][col];
+            os << setw(CELL_WIDTH) << matrix[row][col];
         }
 
         os << endl;

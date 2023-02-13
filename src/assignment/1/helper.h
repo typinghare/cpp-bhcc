@@ -20,6 +20,6 @@ int sum(int array[], int length);
 
 std::string arrayToString(int array[], int length);
 
-void print2DArray(int array[][ROW_LENGTH], int rowNum, std::ostream &os);
+void print2DArray(int matrix[][ROW_LENGTH], int rowNum, std::ostream &os);
 
 #endif

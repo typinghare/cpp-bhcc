@@ -16,10 +16,7 @@ using namespace std;
  * @note Not using the dynamic 2d array; use static 2d array instead
  * @return
  */
-int (*readData(string filename))[ROW_LENGTH] {
-    // create a 125x20 2D array
-    static int matrix[MAX_ROW_NUMBER][ROW_LENGTH];
-
+void readData(std::string filename, int matrix[][ROW_LENGTH]) {
     ifstream fileInputStream(filename);
 
     string line;
@@ -49,6 +46,4 @@ int (*readData(string filename))[ROW_LENGTH] {
     }
 
     fileInputStream.close();
-
-    return matrix;
 }
