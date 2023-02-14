@@ -34,9 +34,9 @@ int readData(std::string filename, int matrix[][ROW_LENGTH]) {
             istream >> checkSum;
             int realSum = sum(matrix[row], ROW_LENGTH);
             if (checkSum != realSum) {
-                cout << "[Report] The checksum is incorrect!"
-                     << "It is expected to be " << realSum << ", "
-                     << checkSum << "is given." << endl;
+                cout << "[Report] The checksum on line [" << row<< "] is incorrect!"
+                     << " It is expected to be " << realSum << ", but"
+                     << checkSum << " is given." << endl;
             }
         } else {
             cout << "[Report] Missing the checksum number!" << endl;

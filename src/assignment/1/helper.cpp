@@ -110,11 +110,11 @@ string arrayToString(int array[], int length) {
  */
 void print2DArray(int matrix[][ROW_LENGTH], int rowNum, ostream &os) {
     for (int row = 0; row < rowNum; ++row) {
-        string label = string("[") + to_string(row) + "]";
+        string label = string("[") + to_string(row + 1) + "]";
 
         os << setw(5) << label;
         for (int col = 0; col < ROW_LENGTH; ++col) {
-            os << setw(CELL_WIDTH) << matrix[row][col];
+            os << setw(CELL_WIDTH_PRINT) << matrix[row][col];
         }
 
         os << endl;

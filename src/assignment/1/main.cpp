@@ -16,17 +16,17 @@ int main() {
     string filename = NAME + ".txt";    // filename of the data file
 
     // generate data
-    int rowNum = generateData(filename);
+    int rowNumWrote = generateData(filename);
     cout << "Generated file \"" << filename << "\" and randomly wrote "
-         << rowNum << " lines. "
+         << rowNumWrote << " lines. "
          << "(" << filesystem::absolute(filesystem::path(filename)) << ")" << endl;
 
     // read data
     int matrix[MAX_ROW_NUMBER][ROW_LENGTH];
-    int rowNum2 = readData(filename, matrix);
+    int rowNum = readData(filename, matrix);
 
     // find the maximum and minimum value of each row
-    int maxArray[125], minArray[125];
+    int maxArray[MAX_ROW_NUMBER], minArray[MAX_ROW_NUMBER];
     for (int row = 0; row < rowNum; ++row) {
         maxArray[row] = maxOfArray(matrix[row], ROW_LENGTH);
         minArray[row] = minOfArray(matrix[row], ROW_LENGTH);

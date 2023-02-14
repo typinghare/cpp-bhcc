@@ -23,9 +23,9 @@ int generateData(string filename) {
     for (int i = 0; i < rowNumber; ++i) {
         int *row = generateRow();
         for (int j = 0; j < ROW_LENGTH; ++j) {
-            fileOutputStream << setw(CELL_WIDTH) << row[j];
+            fileOutputStream << setw(CELL_WIDTH_FILE) << row[j];
         }
-        fileOutputStream << setw(CELL_WIDTH) << sum(row, ROW_LENGTH) << endl;
+        fileOutputStream << setw(CELL_WIDTH_FILE) << sum(row, ROW_LENGTH) << endl;
     }
 
     fileOutputStream.close();
