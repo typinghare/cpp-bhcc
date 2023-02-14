@@ -1,5 +1,6 @@
+#include <iomanip>
 #include <iostream>
-#include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -15,24 +16,26 @@ void sortArray(int *array, int size);
 
 double *findMedian(int *array, int size);
 
-int findMode(int *array, int size);
+int *findMode(int *array, int size);
 
 int randBetween(int lowerBound, int upperBound);
 
-void readWholeNumber(string prompt, ostream &os, istream &in, int &number);
+int readNumber(string prompt, ostream &os, istream &in);
+
+int readWholeNumber(string prompt, ostream &os, istream &in);
 
 int main() {
     // set a random seed
     srand(time(nullptr));
 
-    int size, lowerBound, upperBound;
-    readWholeNumber("Please enter the length of the array: ", cout, cin, size);
-    readWholeNumber("Please enter the lower bound of random numbers (whole number): ", cout, cin, lowerBound);
-    readWholeNumber("Please enter the upper bound of random numbers (whole number): ", cout, cin, upperBound);
+    int size = readWholeNumber("Please enter the length of the array (whole number): ", cout, cin);
+    int lowerBound = readNumber("Please enter the lower bound of random numbers: ", cout, cin);
+    int upperBound = readNumber("Please enter the upper bound of random numbers: ", cout, cin);
 
     while (upperBound < lowerBound) {
-        cout << "The upper bound should be greater than the lower bound (" << lowerBound << ")!" << endl;
-        readWholeNumber("Please enter the upper bound of random numbers (whole number): ", cout, cin, upperBound);
+        cout << "The upper bound should be greater than the lower bound ("
+             << lowerBound << ")!" << endl;
+        upperBound = readNumber("Please enter the upper bound of random numbers:  ", cout, cin);
     }
 
     int *array = createArray(size);
@@ -46,8 +49,8 @@ int main() {
     cout << "The size of this array is: " << size << endl;
 
     // test findMode()
-    int mode = findMode(array, size);
-    if (mode == -1) {
+    int *mode = findMode(array, size);
+    if (mode == nullptr) {
         cout << "The mode does not exist." << endl;
     } else {
         cout << "The mode of this array is: " << mode << endl;
@@ -58,23 +61,23 @@ int main() {
     cout << "The median of this array is: " << *median << endl;
 
     // free memory
-    free(median);
+    // supplement: use delete instead of free for the sake of safety
+    delete median;
     delete[] array;
 }
 
 /**
  * Returns a dynamic integer array of specified size.
  * @param size the size of the array; should be whole number
- * @return a dynamic integer array of specified size.
+ * @return a dynamic integer array of specified size; nullptr is size is not
+ * greater than 0.
  */
 int *createArray(int size) {
-    if (size < 0) {
-        cout << "The size of the array should be a whole number.";
-        // 1: indicates abnormal termination of a program perhaps as a result a minor problem in the code
-        exit(1);
-    }
+    if (size <= 0) return nullptr;
 
-    return new int[size];
+    int *array = new int[size];
+
+    return array;
 }
 
 /**
@@ -83,6 +86,8 @@ int *createArray(int size) {
  * @param size the size of the array.
  */
 void fillArray(int *array, int size, int lowerBound, int upperBound) {
+    if (array == nullptr) return;
+
     for (int i = 0; i < size; ++i) {
         array[i] = randBetween(lowerBound, upperBound);
     }
@@ -90,12 +95,18 @@ void fillArray(int *array, int size, int lowerBound, int upperBound) {
 
 /**
  * Prints an array in a pretty way.
- * @param array
- * @param size
- * @param os
+ * @param array the array to print
+ * @param size the size of the array
+ * @param os ostream
  */
 void printArray(int *array, int size, ostream &os) {
+    if (array == nullptr) {
+        os << "[null]";
+        return;
+    }
+
     // improvement: the width of cells is determined by the longest number
+    // update: now using a more efficient way to determine the "longest length"
     int longestLength = 0;
     for (int i = 0; i < size; ++i) {
         int length = to_string(array[i]).length();
@@ -119,9 +130,7 @@ void printArray(int *array, int size, ostream &os) {
  * @param array the array to sort
  * @param size the size of the array
  */
-void sortArray(int *array, int size) {
-    sort(array, array + size);
-}
+void sortArray(int *array, int size) { sort(array, array + size); }
 
 /**
  * Returns the median of an array.
@@ -130,17 +139,19 @@ void sortArray(int *array, int size) {
  * @return the pointer of a double variable.
  */
 double *findMedian(int *array, int size) {
-    // first sort the array
+    if (array == nullptr) return nullptr;
+
     sortArray(array, size);
 
     double *median = (double *) (malloc(sizeof(double)));
+    int half = size / 2;
 
     if (size % 2 == 1) {
         // the size is an odd number
-        *median = array[size / 2];
+        *median = array[half];
     } else {
         // the size is an even number
-        *median = ((double) array[size / 2] + array[size / 2 - 1]) / 2;
+        *median = ((double) array[half] + array[half - 1]) / 2;
     }
 
     return median;
@@ -152,11 +163,16 @@ double *findMedian(int *array, int size) {
  * @param size the size of the array.
  * @return the mode of an array.
  */
-int findMode(int *array, int size) {
-    // first sort the array
+int *findMode(int *array, int size) {
+    if (array == nullptr) return nullptr;
+
     sortArray(array, size);
 
-    int num[size], frequency[size], pos = 0;
+    // supplement: when the length of the array is not constant
+    // I need to create a dynamic array like this
+    int *num = new int[size];
+    int *frequency = new int[size];
+    int pos = 0;
     num[0] = array[0];
     frequency[0] = 1;
     for (int i = 1; i < size; ++i) {
@@ -169,17 +185,63 @@ int findMode(int *array, int size) {
         }
     }
 
-    int mode = num[0], maxFrequency = frequency[0];
+    // find the max frequency and the number of modes
+    int modeNumber = 1, maxFrequency = frequency[0];
     for (int i = 1; i < pos; ++i) {
         if (frequency[i] > maxFrequency) {
             maxFrequency = frequency[i];
-            mode = num[i];
+            modeNumber = 1;
+        } else if (frequency[i] == maxFrequency) {
+            modeNumber++;
         }
-
     }
 
-    return maxFrequency == 1 ? -1 : mode;
+    // pack modes to a dynamic array and return
+    int *modeArray = new int[modeNumber];
+    int p = 0;
+    for (int i = 0; i < pos; ++i) {
+        if (frequency[i] == maxFrequency)
+            modeArray[p++] = num[i];
+    }
+
+    delete[] num;
+    delete[] frequency;
+
+    return modeArray;
 }
+
+//int findMode(int *array, int size) {
+//    if (array == nullptr) return -1;
+//
+//    sortArray(array, size);
+//
+//    // supplement: when the length of the array is not constant
+//    // I need to create a dynamic array like this
+//    int *num = new int[size];
+//    int *frequency = new int[size];
+//    int pos = 0;
+//    num[0] = array[0];
+//    frequency[0] = 1;
+//    for (int i = 1; i < size; ++i) {
+//        if (array[i] == num[pos]) {
+//            frequency[pos]++;
+//        } else {
+//            pos++;
+//            num[pos] = array[i];
+//            frequency[pos] = 1;
+//        }
+//    }
+//
+//    int mode = num[0], maxFrequency = frequency[0];
+//    for (int i = 1; i < pos; ++i) {
+//        if (frequency[i] > maxFrequency) {
+//            maxFrequency = frequency[i];
+//            mode = num[i];
+//        }
+//    }
+//
+//    return maxFrequency == 1 ? -1 : mode;
+//}
 
 /**
  * Returns a random integer between specified values.
@@ -192,14 +254,28 @@ int randBetween(int lowerBound, int upperBound) {
 }
 
 /**
- * Reads a whole number.
+ * Reads a number.
+ * @return a number read
  */
-void readWholeNumber(string prompt, ostream &os, istream &in, int &number) {
+int readNumber(string prompt, ostream &os, istream &in) {
+    int number;
     os << prompt;
     in >> number;
 
+    return number;
+}
+
+/**
+ * Reads a whole number.
+ * @return a whole number read
+ */
+int readWholeNumber(string prompt, ostream &os, istream &in) {
+    int number = readNumber(prompt, os, in);
+
     while (number < 0) {
-        os << "You should enter a whole number. " << prompt;
-        in >> number;
+        os << "You should enter a whole number. ";
+        number = readNumber(prompt, os, in);
     }
+
+    return number;
 }

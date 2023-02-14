@@ -23,7 +23,7 @@ int main() {
 
     // read data
     int matrix[MAX_ROW_NUMBER][ROW_LENGTH];
-    readData(filename, matrix);
+    int rowNum2 = readData(filename, matrix);
 
     // find the maximum and minimum value of each row
     int maxArray[125], minArray[125];

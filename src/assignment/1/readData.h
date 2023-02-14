@@ -9,6 +9,6 @@
 #include "constant.h"
 
 //int (*readData(std::string filename))[ROW_LENGTH];
-void readData(std::string filename, int matrix[][ROW_LENGTH]);
+int readData(std::string filename, int matrix[][ROW_LENGTH]);
 
 #endif

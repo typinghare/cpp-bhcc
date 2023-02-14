@@ -2,10 +2,11 @@
  * @author James Chan (Zhuojian Chen)
  */
 
-#include <fstream>
 #include "generateData.h"
-#include "helper.h"
+#include <fstream>
+#include <iomanip>
 #include "constant.h"
+#include "helper.h"
 
 using namespace std;
 

@@ -14,9 +14,9 @@ using namespace std;
  * Reads the target file and return a data matrix.
  * @param filename filename/filepath of the target file
  * @note Not using the dynamic 2d array; use static 2d array instead
- * @return
+ * @return the number of line read
  */
-void readData(std::string filename, int matrix[][ROW_LENGTH]) {
+int readData(std::string filename, int matrix[][ROW_LENGTH]) {
     ifstream fileInputStream(filename);
 
     string line;
@@ -32,13 +32,14 @@ void readData(std::string filename, int matrix[][ROW_LENGTH]) {
         if (istream) {
             int checkSum;
             istream >> checkSum;
-            if (checkSum != sum(matrix[row], ROW_LENGTH)) {
-                cout << "The summation is incorrect!" << endl;
-                throw exception();
+            int realSum = sum(matrix[row], ROW_LENGTH);
+            if (checkSum != realSum) {
+                cout << "[Report] The checksum is incorrect!"
+                     << "It is expected to be " << realSum << ", "
+                     << checkSum << "is given." << endl;
             }
         } else {
-            cout << "Missing the check sum number!" << endl;
-            throw exception();
+            cout << "[Report] Missing the checksum number!" << endl;
         }
 
         row++;
@@ -46,4 +47,6 @@ void readData(std::string filename, int matrix[][ROW_LENGTH]) {
     }
 
     fileInputStream.close();
+
+    return row;
 }
