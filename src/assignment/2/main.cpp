@@ -139,7 +139,7 @@ double *findMedian(int array[], int size) {
 
     sortArray(array, size);
 
-    double *median = (double *) (malloc(sizeof(double)));
+    double *median = new double;
     int half = size / 2;
 
     if (size % 2 == 1) {
@@ -186,7 +186,7 @@ int *findMode(int array[], int size) {
         }
     }
 
-    int *modePointer = (int *) malloc(sizeof(int));
+    int *modePointer = new int;
     if (maxFrequency == 1) {
         modePointer = nullptr;
     } else {
