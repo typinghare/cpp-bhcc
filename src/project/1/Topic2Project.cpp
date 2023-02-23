@@ -8,7 +8,7 @@
  *
  * 1. The functions append and concatenate take inputs with a data type of
  * int*& (integer pointer reference). Why?
- * @answer
+ * @answer "int*" refers to an array of integer, and the ampersand sign "&"
  *
  * 2. The function concatenates second input parameter has a data type of const
  * int* (constant integer pointer). Why?
@@ -293,6 +293,7 @@ void updateSum(int *array) {
 int randBetween(int min, int max) {
     return rand() % (max - min + 1) + min;
 }
+
 
 /**
  * Returns the length of an integer; the negative sign counts.
