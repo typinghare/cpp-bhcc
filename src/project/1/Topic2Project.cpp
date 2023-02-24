@@ -8,14 +8,22 @@
  *
  * 1. The functions append and concatenate take inputs with a data type of
  * int*& (integer pointer reference). Why?
- * @answer "int*" refers to an array of integer, and the ampersand sign "&"
+ * @answer The "int*" refers to an array of integer. The ampersand character means passing parameters
+ * by reference. In this case, if we create an array in the main function, and then pass this array to
+ * a function, in which the parameter is reassigned, the value of the variable in the main function
+ * will also be updated. That's because in this situation the address of the variable, instead of a
+ * copy of it, is passed to the function, and when the assignment statement is executed in the
+ * function, the program will update the value of the given address.
  *
  * 2. The function concatenates second input parameter has a data type of const
  * int* (constant integer pointer). Why?
- * @answer
+ * @answer The "int*" refers to an array of integer. The "const" specified that the function will
+ * not modify this argument. This is a good practices to avoid accidental modifications to the array.
  *
  * 3. Under what circumstances (if any) do you need to print error messages in your functions?
- * @answer
+ * @answer (1) the array (int* or int[]) given is `nullptr`. (2) the number of element specified is
+ * a negative number of zero. (3) the `startIndex` is a negative number. (4) the sum of `startIndex`
+ * and `numElements` is greater than the number of all elements.
  */
 
 #include <iostream>
@@ -114,6 +122,11 @@ int *create(int numElements) {
  * @param numElements the number of elements
  */
 void fill(int *array, int numElements) {
+    if (array == nullptr) {
+        cout << "Fail to fill the array because the given array is null." << endl;
+        return;
+    }
+
     fill(array, 0, numElements);
 }
 
@@ -202,6 +215,11 @@ void concatenate(int *&array1, const int *array2) {
  * @param numElements value to append
  */
 void append(int *&array, int value) {
+    if (array == nullptr) {
+        cout << "Fail to fill the array because the given array is null." << endl;
+        return;
+    }
+
     const int newNumElements = array[0] + 1;
     int *newArray = new int[newNumElements + 2];
     newArray[0] = newNumElements;
@@ -273,7 +291,7 @@ void print(int *array) {
 
 /**
  * Updates the sum of an array.
- * @param array
+ * @param array array to update; should not be null
  */
 void updateSum(int *array) {
     const int totalNumElements = array[0];
