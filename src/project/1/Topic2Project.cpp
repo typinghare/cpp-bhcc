@@ -88,7 +88,6 @@ int main() {
     delete[] pArray;
     delete[] pArr2;
     pArray = nullptr;
-    pArr2 = nullptr;
     return 0;
 }
 
@@ -149,10 +148,8 @@ void fill(int *array, int startIndex, int numElements) {
     }
 
     for (int i = startIndex + 1; i < startIndex + numElements + 1; ++i) {
-        int num;
         cout << "Please enter a number for element [" << i - 1 << "]: ";
-        cin >> num;
-        array[i] = num;
+        cin >> array[i];
     }
 
     updateSum(array);
@@ -198,7 +195,7 @@ void concatenate(int *&array1, const int *array2) {
     }
 
     // copy elements from array2
-    for (int i = numElements1 + 1; i <= numElements1 + numElements2 + 1; ++i) {
+    for (int i = numElements1 + 1; i < numElements1 + numElements2 + 1; ++i) {
         newArray[i] = array2[i - numElements1];
     }
 
@@ -246,6 +243,12 @@ void append(int *&array, int value) {
  * @return the element at a specified index.
  */
 int elementAt(int *array, int index) {
+    // check index
+    if (index < 0 || index >= array[0]) {
+        cout << "The index given is out of bound." << endl;
+        return 0;
+    }
+
     return array[index + 1];
 }
 
