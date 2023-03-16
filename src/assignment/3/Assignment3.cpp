@@ -1,6 +1,9 @@
 /**
  * @author James (Zhuojian Chen)
  * @date Feb 23rd, 2022
+ *
+ * @update Mar 16, 2022
+ * 1. Fixes a bug in readFile() function.
 */
 
 #include <iostream>
@@ -22,8 +25,8 @@ int printCapitalizedWords(char *str, ostream &os);
 int countWords(char *str, string word);
 
 int main() {
-    const string FILEPATH = "../resource/TaleOfTwoCities.txt";
-//    const string FILEPATH = "TaleOfTwoCities.txt";
+//    const string FILEPATH = "../resource/TaleOfTwoCities.txt";
+    const string FILEPATH = "TaleOfTwoCities.txt";
 
     char *cstr = readFile(FILEPATH);
     if (cstr == nullptr) return 0;
@@ -49,8 +52,11 @@ int main() {
  * @return
  */
 char *readFile(string filepath) {
-    const string absolutePath = filesystem::absolute(filepath);
+    // update: filesystem::absolute() method returns a "path" object
+    // using string() method of a "path" object can get the absolute path string
+    const string absolutePath = filesystem::absolute(filepath).string();
     cout << "Reading File: " << absolutePath << endl;
+
     if (!filesystem::exists(absolutePath)) {
         cout << "File does not exist: " << absolutePath << endl;
         return nullptr;
