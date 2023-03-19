@@ -24,12 +24,13 @@
  */
 
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
 struct Account {
     string accountNumber;   // 6 digits, can start with 0
-    string ownerName;       // the name of the owen of this account
+    string ownerName;       // the name of the owner of this account
     char accountType;       // S = savings, C = checking
     double rate;            // (annual) interest rate
     double balance;         // balance (in American dollar)
@@ -43,7 +44,7 @@ void updateAccountInterest(Account &account, int numMonths);
 
 void printAccount(Account &account, ostream &os);
 
-int randBetween(int lowerBound, int upperBound);
+double randBetween(double lowerBound, double upperBound);
 
 string generateAccountNumber();
 
@@ -72,7 +73,7 @@ int main() {
     const int NUM_ACCOUNT = 3;
     const double ACCOUNT_BALANCE_MIN = 75.0;
     const double ACCOUNT_BALANCE_MAX = 200.0;
-    const double INTEREST_RATE = 0.004; // 4%
+    const double INTEREST_RATE = 0.04; // 4.00%
     Account *accountArray = new Account[NUM_ACCOUNT];
 
     for (int i = 0; i < NUM_ACCOUNT; ++i) {
@@ -98,8 +99,8 @@ int main() {
 
     // deposit $10 to and withdraw $150 from each account
     for (int i = 0; i < NUM_ACCOUNT; ++i) {
-        deposit(accountArray[i], 10);
-        withdraw(accountArray[i], 150);
+        deposit(accountArray[i], 10.0);
+        withdraw(accountArray[i], 150.0);
     }
 
     // print all the savings accounts
@@ -167,18 +168,19 @@ void printAccount(Account &account, ostream &os) {
     os << "Account number: " << account.accountNumber << endl
        << "Owner name: " << account.ownerName << endl
        << "Account type: " << accountType << endl
-       << "Interest rate: " << account.rate << endl
-       << "Balance: " << account.balance << endl;
+       << "Interest rate: " << setprecision(2) << fixed << (account.rate * 100) << '%' << endl
+       << "Balance: " << setprecision(2) << fixed << account.balance << endl;
 }
 
 /**
- * Returns a random integer between specified values.
+ * Returns a random double number between specified bounds.
  * @param lowerBound the lower bound; included
- * @param upperBound the upper bound; included
- * @return a random integer between specified values.
+ * @param upperBound the upper bound; excluded
+ * @return a random double number between specified values.
  */
-int randBetween(int lowerBound, int upperBound) {
-    return rand() % (upperBound - lowerBound + 1) + lowerBound;
+double randBetween(double lowerBound, double upperBound) {
+    double f = (double) rand() / RAND_MAX;
+    return lowerBound + f * (upperBound - lowerBound);
 }
 
 /**

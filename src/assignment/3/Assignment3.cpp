@@ -196,6 +196,7 @@ int countWords(char *str, string word) {
 
             curr.str(string());
         } else if (isalpha(c)) {
+        } else if (isalpha(c)) {
             curr << c;
         }
     }
