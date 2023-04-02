@@ -1,42 +1,30 @@
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
-struct Time {
-    int hour;
-    int minute;
-    int second;
-};
-
 struct Date {
-    int year;
-    int month;
-    int day;
+    short year;     // format: YYYY
+    short month;    // format: mm
+    short day;      // format: dd
 };
 
-struct DateTime {
-    Date *date;
-    Time *time;
-};
+Date randDate() {
+    Date date = {1,2,3};
+
+    return date;
+}
 
 int main() {
-    Time time;
-    Date date;
-    DateTime dateTime;
+    // sequential reading and writing
+    ofstream file1("sequential.dat", std::ios::binary);
+    char data[] = {'o', 'p', 'e', 'n', 'a', 'i'};
+    file1.write(data, sizeof(data));
+    file1.close();
 
-    time.hour = 10;
-    time.minute = 10;
-    time.second = 10;
-
-    date.year = 2023;
-    date.month = 3;
-    date.day = 15;
-
-    dateTime.date = &date;
-    dateTime.time = &time;
-
-    dateTime.time->hour = 12;
-    cout << time.hour << endl;
-
-    return 0;
+    // random access reading and writing
+    fstream file2("random_access.dat", std::ios::in | std::ios::out | std::ios::binary);
+    file2.seekp(3, ios::beg);	// skips three bytes from the beginning
+    file2.write(data, sizeof(data));
+    file2.close();
 }
