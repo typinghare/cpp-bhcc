@@ -1,8 +1,6 @@
 /**
-* @author Zhuojian Chen (James)
-*/
-
-/**
+ * @author Zhuojian Chen (James)
+ * @date Apr 2, 2023
  * @requirement
  * Create a program that implements a checkbook structure:
  * [Checkbook]                          [Comment]
@@ -19,7 +17,7 @@
  * 5. Check for errors reading and writing the files.
  * 6. Open the files again to add 10 more random deposits and withdrawals. Again, close both files.
  *    Read the binary file in reverse and print it to the console.
- */
+*/
 
 #include <iostream>
 #include <fstream>
@@ -72,23 +70,11 @@ int main() {
     string textFilepath = "";
     string binaryFilepath = "";
 
-    while (textFilepath == "") {
-        cout << "Please input the filepath of the text file: ";
-        cin >> textFilepath;
-        if (!filesystem::exists(textFilepath)) {
-            cout << "The file does not exist." << endl;
-            textFilepath = "";
-        }
-    }
+    cout << "Please input the filepath of the text file: ";
+    cin >> textFilepath;
 
-    while (binaryFilepath == "") {
-        cout << "Please input the filepath of the binary file: ";
-        cin >> binaryFilepath;
-        if (!filesystem::exists(binaryFilepath)) {
-            cout << "The file does not exist." << endl;
-            binaryFilepath = "";
-        }
-    }
+    cout << "Please input the filepath of the binary file: ";
+    cin >> binaryFilepath;
 
     double balance = 0.0;
     Date date = {2023, 3, 12};
@@ -225,6 +211,8 @@ Checkbook *readCheckbooksFromBinaryFile(string filepath, int size) {
  * @param os
  */
 void printCheckbook(Checkbook checkbook, ostream &os) {
+    if (checkbook.date.year == 0) return;   // empty checkbook
+
     const double mc = checkbook.depositOrWithdrawAmount;
 
     const int day = checkbook.date.day, month = checkbook.date.month;
