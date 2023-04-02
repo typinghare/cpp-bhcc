@@ -121,7 +121,7 @@ int main() {
         printCheckbook(checkbooks2[i], cout);
     }
 
-    // release
+    // release memory
     delete[] checkbooks;
     delete[] checkbooks2;
 }
