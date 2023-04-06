@@ -1,0 +1,42 @@
+# Create a UML diagram for the "Course" class which has:
+# A course ID which is a string (such as CSC-237-02H)
+# A course Name which is a string (such as C++)
+# A number of students
+# A semester (an enumerator (0 = Spring, 1 =summer, 2 = fall, 3 = wintersession)
+# A year (4 digits)
+
+# A constructor that is a default constructor (empty)
+# A constructor that allows for all variables to be set
+# a private setter that checks that the number of students >= 0
+# a private setter that checks that the enumerator is within bounds
+# a private setter that checks that the year is > 2015
+# getters for all variables
+# a toString that prints all information for the course.
+
+
+============================================================================================
+Course
+============================================================================================
+- id: string
+- name: string
+- numStudent: int                   the number of students
+- semester: int                     enum(0=Spring; 1=Summer; 3=WinterSession)
+- year: int                         four digits
+============================================================================================
++ Course()
++ Course(
+    id: string,
+    name: string,
+    numStudent: int,
+    semester: int,
+    year: int)
+- setNumStudent(numStudent: int)    Sets and checks the number of students >= 0.
+- setSemester(semester: int)        Sets and checks whether the semester is within bound.
+- setYear(year: int)                Sets and checks whether the year is > 2015.
++ getId(): string                   Returns course id.
++ getName(): string                 Returns course name.
++ getNumStudent(): int              Returns the number of students in this course.
++ getSemester(): int                Returns the semester of this course.
++ getYear(): int                    Returns the year of this course.
++ toString(): string                Returns a string of all the attributes of this course.
+============================================================================================
