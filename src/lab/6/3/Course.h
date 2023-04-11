@@ -3,39 +3,46 @@
 
 #include <iostream>
 
-using namespace std;
+enum Semester {
+    SPRING,
+    SUMMER,
+    FALL,
+    WINTER_SESSION
+};
 
 // declaration of Course class
 class Course {
 private:
-    string id;      // course id
-    string name;    // course name
-    int numStudent; // number of students
-    int semester;   // enum(0=Spring; 1=Summer; 2=Fall, 3=WinterSession)
-    int year;       // course year (>=2015)
+    std::string id;         // course id
+    std::string name;       // course name
+    int numStudent;         // number of students
+    Semester semester;      // enum(0=Spring; 1=Summer; 2=Fall, 3=WinterSession)
+    int year;               // course year (>=2015)
 
     void setNumStudent(int _numStudent);
 
-    void setSemester(int _semester);
+    void setSemester(Semester _semester);
 
     void setYear(int _year);
 
 public:
+    static const std::string SemesterNames[4];
+
     Course();
 
-    Course(string id, string name, int numStudent, int semester, int year);
+    Course(std::string id, std::string name, int numStudent, Semester semester, int year);
 
-    const string getId() const;
+    const std::string getId() const { return id; }
 
-    const string getName() const;
+    const std::string getName() const { return name; }
 
-    int getNumStudent() const;
+    int getNumStudent() const { return numStudent; }
 
-    int getSemester() const;
+    int getSemester() const { return semester; }
 
-    int getYear() const;
+    int getYear() const { return year; }
 
-    string toString();
+    std::string toString();
 };
 
 #endif
