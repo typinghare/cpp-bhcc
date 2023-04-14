@@ -1,30 +1,41 @@
 #include <iostream>
-#include <fstream>
 
 using namespace std;
 
-struct Date {
-    short year;     // format: YYYY
-    short month;    // format: mm
-    short day;      // format: dd
+//class Person {
+//private:
+//    string *name;
+//public:
+//    Person(string *_name) {
+//        name = _name;
+//    }
+//
+//    string *getName() { return name; }
+//};
+//
+//
+//int main() {
+//    string name = "James";
+//    Person person[1] = {&name};
+//
+//    cout << *(person[0].getName()) << endl;
+//}
+
+class FeetInch {
+private:
+    int feet, inch;
+public:
+    FeetInch(int feet = 0, int inch = 0) {
+        this->feet = feet;
+        this->inch = inch;
+    }
+
+    FeetInch operator++(int);
 };
 
-Date randDate() {
-    Date date = {1,2,3};
+FeetInch FeetInch::operator++(int) {
+//    FeetInch feetInch(feet, inch);
+    FeetInch feetInch = *this;
 
-    return date;
-}
-
-int main() {
-    // sequential reading and writing
-    ofstream file1("sequential.dat", std::ios::binary);
-    char data[] = {'o', 'p', 'e', 'n', 'a', 'i'};
-    file1.write(data, sizeof(data));
-    file1.close();
-
-    // random access reading and writing
-    fstream file2("random_access.dat", std::ios::in | std::ios::out | std::ios::binary);
-    file2.seekp(3, ios::beg);	// skips three bytes from the beginning
-    file2.write(data, sizeof(data));
-    file2.close();
+    return feetInch
 }

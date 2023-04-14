@@ -1,5 +1,0 @@
-#ifndef BHCC_CPP_ASSIGNMENT7_H
-#define BHCC_CPP_ASSIGNMENT7_H
-
-#endif
-
