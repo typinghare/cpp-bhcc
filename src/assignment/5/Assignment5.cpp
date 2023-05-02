@@ -1,6 +1,7 @@
 /**
  * @author Zhuojian Chen (James)
  * @date Apr 2, 2023
+ *
  * @requirement
  * Create a program that implements a checkbook structure:
  * [Checkbook]                          [Comment]
@@ -117,10 +118,10 @@ int main() {
  * @param balance balance
  * @param date the date to deposit
  * @param moneyToDeposit money to deposit
- * @return
+ * @return checkbook
  */
 Checkbook deposit(double &balance, Date date, double moneyToDeposit) {
-    Checkbook checkbook = Checkbook();
+    Checkbook checkbook;
 
     checkbook.date = date;
     checkbook.depositOrWithdrawAmount = moneyToDeposit;
@@ -136,7 +137,7 @@ Checkbook deposit(double &balance, Date date, double moneyToDeposit) {
  * @param moneyToWithdraw
  */
 Checkbook withdraw(double &balance, Date date, double moneyToWithdraw) {
-    Checkbook checkbook = Checkbook();
+    Checkbook checkbook;
 
     if (moneyToWithdraw > balance) {
         cout << "Insufficient balance." << endl;
@@ -185,7 +186,7 @@ void writeToBinaryFile(Checkbook checkbook, string filepath) {
  * Reads checkbooks from a specified binary file and returns an array of checkbook.
  * @param filepath
  * @param size
- * @return
+ * @return checkbooks
  */
 Checkbook *readCheckbooksFromBinaryFile(string filepath, int size) {
     Checkbook *checkbooks = new Checkbook[size];
@@ -216,8 +217,8 @@ void printCheckbook(Checkbook checkbook, ostream &os) {
     const double mc = checkbook.depositOrWithdrawAmount;
 
     const int day = checkbook.date.day, month = checkbook.date.month;
-    const string dayStr = day > 10 ? to_string(day) : "0" + to_string(day);
-    const string monthStr = month > 10 ? to_string(month) : "0" + to_string(month);
+    const string dayStr = day >= 10 ? to_string(day) : "0" + to_string(day);
+    const string monthStr = month >= 10 ? to_string(month) : "0" + to_string(month);
 
     os << "[" << checkbook.date.year << "." << monthStr << "." << dayStr << "] "
        << (mc > 0 ? "Deposit=" : "Withdraw=") << abs(mc) << "; Balance="

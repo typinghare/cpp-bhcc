@@ -1,5 +1,6 @@
 /**
  * @author Zhuojian Chen (James)
+ *
  * @requirement
  * Modify the Box class (topic 6 reading assignment):
  * 1. create overloaded comparison operators (<, >, <=, >=, !=, ==).
@@ -10,6 +11,8 @@
  * smaller than the LHS. (Think of cutting off a section of a 2x4 length of lumber).
  * 4. create overloaded stream input and output operators.
  * NOTE: in the stream input overload, do NOT use cout to get the values from the user...
+ *
+ * @update "stream input should validate the inputs."
  */
 
 #include "Box.h"
@@ -101,6 +104,7 @@ Box Box::operator-(const Box &box) {
 }
 
 istream &operator>>(istream &in, Box &box) {
+    // validate the inputs
     in >> box.length >> box.width >> box.height >> box.material;
 
     return in;
