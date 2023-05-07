@@ -9,9 +9,16 @@
  * display the number of passengers, and the make, the model of the transportation, and the current
  * speed. Overload the stream output operator and demonstrate with a polymorphic print function that
  * can print to either cout or to a file.
+ *
+ * @update May 3, 2023
+ * 1. Separates Car and Bicycle in different files.
+ * 2. Adds a straightforward speed check within the decelerate method.
+ * 3. Adds a validation within the numPassenger setter.
+ * 4. Move "#endif" to the end of the file in header files.
 */
 
-#include "Transportation.h"
+#include "Car.h"
+#include "Bicycle.h"
 #include <iostream>
 
 using namespace std;
@@ -32,6 +39,7 @@ int main() {
     car.setNumPassenger(3);
     car.setMake("Tesla");
     car.setModel("S");
+    car.decelerate();   // this should not work
     for (int i = 0; i < 40; ++i) car.accelerate();
     car.decelerate();
     car.decelerate();
@@ -43,6 +51,7 @@ int main() {
 
     Bicycle bicycle;
     bicycle.setNumPassenger(0);
+    bicycle.setNumPassenger(-1);    // this should not work
     bicycle.setMake("Trek");
     bicycle.setModel("Domane+");
     for (int i = 0; i < 12; ++i) bicycle.accelerate();

@@ -28,3 +28,11 @@ float TestScores::getAverage() {
 
     return sum / length;
 }
+
+/**
+ * Here the `scores` is a static array and is created in the heap.
+ * Do not forget to release memory in the class destructor!
+ */
+TestScores::~TestScores() {
+    delete[] scores;
+}

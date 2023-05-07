@@ -1,11 +1,11 @@
-#include "classes.h"
 #include <iostream>
+#include "Date.h"
 
 using namespace std;
 
 // Today's date.
 // Since I don't know how to get today's date in C++, I can only define it here.
-Date today = Date(4, 30, 2023);
+Date today = Date(5, 7, 2023);
 
 /**
  * Whether a given year is a leap year. In a leap year, there are 29 days in February.
@@ -22,7 +22,8 @@ bool isLeapYear(short year) {
 }
 
 /**
- * Returns the number of days from the birth date to today's date.
+ * Returns the number of days from the birth date to today's date. It should be ensured that the
+ * birthdate is at before today's date.
  * Tested by: https://www.timeanddate.com/date/durationresult.html
  * @param birthDate the birth date.
  */
@@ -109,66 +110,4 @@ void Date::checkDay() {
             + ", but" + to_string(day) + " is given."
         );
     }
-}
-
-string Robot::toString() {
-    cout << "Robot toString." << endl;
-    return "[Robot] Name = " + name + "; Planet of origin = " + planet_of_origin + "; inventor = " +
-           inventor + "; context = " + context;
-}
-
-ostream &operator<<(ostream &os, Robot robot) {
-    os << robot.toString() << endl;
-
-    return os;
-}
-
-istream &Robot::operator>>(istream &is) {
-    return is;
-}
-
-std::string Person::toString() {
-    return "";
-}
-
-istream &Person::operator>>(istream &is) {
-    return is;
-}
-
-bool Person::operator<(const Person &person) {
-    return daysAfterBirth(birthDate) < daysAfterBirth(person.birthDate);
-}
-
-bool Person::operator>(const Person &person) {
-    return daysAfterBirth(birthDate) > daysAfterBirth(person.birthDate);
-}
-
-bool Person::operator<=(const Person &person) {
-    return daysAfterBirth(birthDate) <= daysAfterBirth(person.birthDate);
-}
-
-bool Person::operator>=(const Person &person) {
-    return daysAfterBirth(birthDate) >= daysAfterBirth(person.birthDate);
-}
-
-bool Person::operator!=(const Person &person) {
-    return daysAfterBirth(birthDate) != daysAfterBirth(person.birthDate);
-}
-
-bool Person::operator==(const Person &person) {
-    return daysAfterBirth(birthDate) == daysAfterBirth(person.birthDate);
-}
-
-std::string SuperPerson::toString() {
-    return "";
-}
-
-//ostream &SuperPerson::operator<<(ostream &os) {
-//    os << toString();
-//
-//    return os;
-//}
-
-istream &SuperPerson::operator>>(istream &is) {
-    return is;
 }

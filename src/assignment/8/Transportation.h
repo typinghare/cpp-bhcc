@@ -1,8 +1,6 @@
 #ifndef BHCC_CPP_TRANSPORTATION_H
 #define BHCC_CPP_TRANSPORTATION_H
 
-#endif
-
 #include <iostream>
 
 /**
@@ -41,7 +39,7 @@ public:
 
     int getSpeed() { return speed; }
 
-    void setNumPassenger(int _numPassenger) { numPassenger = _numPassenger; }
+    void setNumPassenger(int _numPassenger);
 
     int getNumPassenger() { return numPassenger; }
 
@@ -56,27 +54,4 @@ public:
     friend std::ostream &operator<<(std::ostream &, Transportation &);
 };
 
-/**
- * Car extends Transportation.
- */
-class Car : public Transportation {
-public:
-    std::string toString() override;
-
-    std::string getType() override { return "Car"; }
-};
-
-/**
- * Bicycle extends Transportation.
- */
-class Bicycle : public Transportation {
-public:
-    std::string toString() override;
-
-    std::string getType() override { return "Bicycle"; }
-
-    // Because the bicycle cannot go backward, here we should override this method.
-    void backward() override {
-        std::cout << getType() << " cannot go backward." << std::endl;
-    }
-};
+#endif

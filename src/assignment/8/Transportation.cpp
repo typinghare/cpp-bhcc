@@ -1,10 +1,8 @@
 
 #include "Transportation.h"
 #include <iostream>
-#include <sstream>
 
 using namespace std;
-
 
 std::ostream &operator<<(ostream &os, Transportation &transportation) {
     os << transportation.toString();
@@ -12,28 +10,9 @@ std::ostream &operator<<(ostream &os, Transportation &transportation) {
     return os;
 }
 
-string Car::toString() {
-    stringstream ss;
-
-    ss << "[" << getType() << "] "
-       << "NumberOfPassenger = " << getNumPassenger()
-       << "; Make = " << getMake()
-       << "; Model = " << getModel()
-       << "; Speed = " << getSpeed() << "mph"
-       << "." << endl;
-
-    return ss.str();
-}
-
-string Bicycle::toString() {
-    stringstream ss;
-
-    ss << "[" << getType() << "] "
-       << "NumberOfPassenger = " << getNumPassenger()
-       << "; Make = " << getMake()
-       << "; Model = " << getModel()
-       << "; Speed = " << getSpeed() << "mph"
-       << "." << endl;
-
-    return ss.str();
+void Transportation::setNumPassenger(int _numPassenger) {
+    // Crew members (if any), as well as the driver or pilot of the vehicle,
+    // are usually not considered to be passengers
+    if (_numPassenger >= 0)
+        numPassenger = _numPassenger;
 }

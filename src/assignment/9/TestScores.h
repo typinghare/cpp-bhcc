@@ -29,4 +29,6 @@ public:
      * @return the average of the scores.
      */
     float getAverage();
+
+    ~TestScores();
 };
