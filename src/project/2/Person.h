@@ -2,9 +2,9 @@
 #define BHCC_CPP_PERSON_H
 
 #include <iostream>
+#include <array>
 #include "Date.h"
 #include "LifeForm.h"
-#include <array>
 
 class Person : public virtual LifeForm {
 private:
