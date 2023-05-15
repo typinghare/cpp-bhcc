@@ -1,6 +1,18 @@
 /**
  * @author James Chan
  * @date Feb 23, 2023
+ *
+ * @update May 8, 2023
+ *
+ * @requirement
+ * 1. Ask the user for the size of the array to create (larger than 1000)
+ * 2. Create a dynamic integer array of the size the user specifies
+ * 3. Fill the array with random numbers between -(size/2) and (size/2)
+ * 4. Create a second dynamic short array of the size the user specified.
+ * 5. Loop through the first array, determine the number of digits in each number (include the sign
+ * as a digit) in the first array, and put that number in the second array.
+ * 6. write a function that prints the 2nd array, 20 per line neatly formatted. (and print the 2nd
+ * array)
 */
 
 #include <iostream>
@@ -19,20 +31,8 @@ void printArray(short array[], int size);
 // constants
 int PRINT_ARRAY_MAX_COLUMN = 20;
 
-/**
-* @requirement
- * Ask the user for the size of the array to create (larger than 1000)
- * Create a dynamic integer array of the size the user specifies
- * Fill the array with random numbers between -(size/2) and (size/2)
- * Create a second dynamic short array of the size the user specified.
- * Loop through the first array, determine the number of digits in each number
- * (include the - sign as a digit) in the first array, and put that number in the second array.
- * write a function that prints the 2nd array, 20 per line neatly formatted.
- * (and print the 2nd array)
-*/
-
 int main() {
-    // ask the user for the size of the array to create (size > 1000)
+    // 1. ask the user for the size of the array to create (size > 1000)
     int size = 0;
     do {
         cout << "Please input the size of the array (> 1000): ";
