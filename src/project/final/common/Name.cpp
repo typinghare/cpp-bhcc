@@ -1,4 +1,7 @@
 #include "Name.h"
+#include "../util/helper.h"
+
+const std::string Name::ANONYMOUS_LABEL = "[Anonymous]";
 
 Name::Name(std::string firstName, std::string lastName) {
     isAnonymous = false;
@@ -18,7 +21,7 @@ std::istream &operator>>(std::istream &is, Name &name) {
     std::string firstName;
     is >> firstName;
 
-    if (firstName == "[Anonymous]") {
+    if (firstName == Name::ANONYMOUS_LABEL) {
         name.isAnonymous = true;
     } else {
         name.firstName = firstName;
@@ -29,6 +32,7 @@ std::istream &operator>>(std::istream &is, Name &name) {
 }
 
 std::ostream &operator<<(std::ostream &os, Name &name) {
-    os << name.toString();
-    return os;
+    return name.isAnonymous ?
+           os << joinWithSpace(Name::ANONYMOUS_LABEL) :
+           os << joinWithSpace(name.firstName, name.lastName);
 }

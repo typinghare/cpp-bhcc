@@ -10,6 +10,11 @@
 class Time {
 private:
     int seconds = 0, minutes = 0, hours = 0;
+
+    /**
+     * Checks whether seconds, minutes, and hours and whole numbers.
+     */
+    void checkMemberVariables();
 public:
     Time() : Time(0, 0, 0) {};
 

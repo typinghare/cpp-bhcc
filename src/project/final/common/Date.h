@@ -25,10 +25,10 @@ private:
     /**
      * Checks for valid date based on year and month.
      */
-    void checkDay();
+    void checkMemberVariables();
 
 public:
-    Date();
+    Date() {};
 
     Date(short month, short day, short year);
 

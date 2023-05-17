@@ -3,8 +3,9 @@
 
 int Dance::numberOfDanceItems = 0;
 
-Dance::Dance(Name artist, Date created, Date acquired, Name donatedBy, std::string performedBy,
-             Time length) : Artwork(artist, created, acquired, donatedBy) {
+Dance::Dance(Name artist, Date created, Date acquired, Name donatedBy, std::string description,
+             std::string performedBy, Time length)
+    : Artwork(artist, created, acquired, donatedBy, description) {
     this->performedBy = performedBy;
     this->length = length;
 }
@@ -36,6 +37,8 @@ std::istream &operator>>(std::istream &is, Dance &dance) {
 }
 
 std::ostream &operator<<(std::ostream &os, Dance &dance) {
-    os << dance.toString();
+    os << static_cast<Artwork&>(dance);
+    os << dance.performedBy << dance.length;
+
     return os;
 }

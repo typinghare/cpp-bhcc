@@ -2,7 +2,7 @@
 #define BHCC_CPP_PAINTING_H
 
 #include "Artwork.h"
-#include "../util/Dimensions.h"
+#include "../common/Dimensions.h"
 
 /**
  * A painting artwork.
@@ -16,11 +16,24 @@ public:
     static int numberOfPaintings;
     static const std::string mediumString[4];
 private:
+    // The medium of this painting.
     Medium medium;
+
+    // The dimensions of this painting.
     Dimensions dimensions;
 public:
-    Painting(Name artist, Date created, Date acquired, Name donatedBy, Medium medium,
-             Dimensions dimensions);
+    /**
+     * Creates a dance artwork.
+     * @param artist the name of the artist of this painting.
+     * @param created the date this painting was created.
+     * @param acquired the date this painting was acquired from the donor.
+     * @param donatedBy the name of the donor.
+     * @param description the description of this painting.
+     * @param medium the medium of this painting.
+     * @param dimensions the dimensions of this painting.
+     */
+    Painting(Name artist, Date created, Date acquired, Name donatedBy, std::string description,
+             Medium medium, Dimensions dimensions);
 
     const Medium getMedium() const { return medium; }
 

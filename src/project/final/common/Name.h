@@ -7,6 +7,8 @@
  * The name of a person, including first name and last name. It can also be anonymous.
  */
 class Name {
+public:
+    static const std::string ANONYMOUS_LABEL;
 private:
     /**
      * Whether the person is anonymous.
@@ -22,8 +24,8 @@ public:
 
     /**
      * Creates a non-anonymous person.
-     * @param firstName
-     * @param lastName
+     * @param firstName first name;
+     * @param lastName last name;
      */
     Name(std::string firstName, std::string lastName);
 

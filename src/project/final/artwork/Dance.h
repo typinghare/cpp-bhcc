@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include "Artwork.h"
-#include "../util/Time.h"
+#include "../common//Time.h"
 
 /**
  * A dance artwork. (Honestly how can a dance be substance?)
@@ -19,8 +19,18 @@ private:
     // The length of this dance.
     Time length;
 public:
-    Dance(Name artist, Date created, Date acquired, Name donatedBy, std::string performedBy,
-          Time length);
+    /**
+     * Creates a dance artwork.
+     * @param artist the name of the artist of this dance.
+     * @param created the date this dance was created.
+     * @param acquired the date this dance was acquired from the donor.
+     * @param donatedBy the name of the donor.
+     * @param description the description of this dance.
+     * @param performedBy the name of the team performing this dance.
+     * @param length the length of this dance.
+     */
+    Dance(Name artist, Date created, Date acquired, Name donatedBy, std::string description,
+          std::string performedBy, Time length);
 
     double value() override;
 

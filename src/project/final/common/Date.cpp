@@ -1,27 +1,10 @@
 #include "Date.h"
 #include <string>
+#include "../util/helper.h"
 
 using namespace std;
 
-/**
- * @return a date string formatting as "MM-DD-YYYY".
- */
-std::string Date::toString() {
-    string monthString = month >= 10 ? to_string(month) : '0' + to_string(month);
-    string dayString = day >= 10 ? to_string(day) : '0' + to_string(day);
-
-    return monthString + "-" + dayString + "-" + to_string(year);
-}
-
-Date::Date(short month, short day, short year) {
-    this->month = month;
-    this->day = day;
-    this->year = year;
-
-    checkDay();
-}
-
-void Date::checkDay() {
+void Date::checkMemberVariables() {
     // Validate month.
     if (month < 1 || month > 12) {
         throw new invalid_argument(
@@ -30,9 +13,10 @@ void Date::checkDay() {
     }
 
     // Validate year.
-    if (year < 100 || year > 3000) {
+    if (year < 100 || year > CURRENT_YEAR) {
         throw new invalid_argument(
-            "Year should be between 100 and 3000, but " + to_string(year) + " is given."
+            "Year should be between 100 and " + to_string(CURRENT_YEAR) + ", but "
+            + to_string(year) + " is given."
         );
     }
 
@@ -46,6 +30,21 @@ void Date::checkDay() {
     }
 }
 
+std::string Date::toString() {
+    string monthString = month >= 10 ? to_string(month) : '0' + to_string(month);
+    string dayString = day >= 10 ? to_string(day) : '0' + to_string(day);
+
+    return monthString + "-" + dayString + "-" + to_string(year);
+}
+
+Date::Date(short month, short day, short year) {
+    this->month = month;
+    this->day = day;
+    this->year = year;
+
+    checkMemberVariables();
+}
+
 short Date::getYearsFromNow() const {
     return CURRENT_YEAR - year;
 }
@@ -53,9 +52,11 @@ short Date::getYearsFromNow() const {
 std::istream &operator>>(std::istream &is, Date &date) {
     is >> date.month >> date.day >> date.year;
 
+    date.checkMemberVariables();
+
     return is;
 }
 
 std::ostream &operator<<(std::ostream &os, Date &date) {
-    return os << date.toString();
+    return os << joinWithSpace(date.month, date.day, date.year);
 }

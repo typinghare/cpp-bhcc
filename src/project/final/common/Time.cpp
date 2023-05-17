@@ -1,10 +1,11 @@
 #include "Time.h"
 #include <sstream>
 #include <string>
+#include "../util/helper.h"
 
 using namespace std;
 
-Time::Time(int hours, int minutes, int seconds) {
+void Time::checkMemberVariables() {
     if (hours < 0) {
         throw new invalid_argument("The hours should be a whole number!");
     }
@@ -14,10 +15,14 @@ Time::Time(int hours, int minutes, int seconds) {
     if (seconds < 0) {
         throw new invalid_argument("The seconds should be a whole number!");
     }
+}
 
+Time::Time(int hours, int minutes, int seconds) {
     this->hours = hours;
     this->minutes = minutes;
     this->seconds = seconds;
+
+    checkMemberVariables();
 }
 
 Time::Time(int minutes, int seconds) : Time(0, minutes, seconds) {}
@@ -38,10 +43,11 @@ string Time::toString() {
 std::istream &operator>>(std::istream &is, Time &time) {
     is >> time.hours >> time.minutes >> time.seconds;
 
+    time.checkMemberVariables();
+
     return is;
 }
 
-std::ostream &operator<<(std::ostream &os,  Time &time) {
-    os << time.toString();
-    return os;
+std::ostream &operator<<(std::ostream &os, Time &time) {
+    return os << joinWithSpace(time.hours, time.minutes, time.seconds);
 }

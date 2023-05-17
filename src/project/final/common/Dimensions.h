@@ -17,6 +17,11 @@ private:
      * Height in feet.
      */
     double height;
+
+    /**
+     * Checks whether width and height are positive numbers.
+     */
+    void checkMemberVariables();
 public:
     Dimensions() {};
 

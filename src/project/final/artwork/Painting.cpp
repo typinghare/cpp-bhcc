@@ -6,9 +6,9 @@ int Painting::numberOfPaintings = 0;
 
 const std::string Painting::mediumString[4]{"Oil", "Acrylic", "Mixed Media", "Watercolor"};
 
-Painting::Painting(Name artist, Date created, Date acquired, Name donatedBy, Medium medium,
-                   Dimensions dimensions) :
-    Artwork(artist, created, acquired, donatedBy) {
+Painting::Painting(Name artist, Date created, Date acquired, Name donatedBy,
+                   std::string description, Medium medium, Dimensions dimensions) :
+    Artwork(artist, created, acquired, donatedBy, description) {
     this->medium = medium;
     this->dimensions = dimensions;
 }
@@ -44,7 +44,7 @@ Painting::Medium parseMediumString(std::string mediumString) {
         }
     }
 
-    throw new std::invalid_argument("Invalid medium string: " + mediumString);
+    throw new std::invalid_argument("Invalid painting medium string: " + mediumString);
 }
 
 std::istream &operator>>(std::istream &is, Painting &painting) {

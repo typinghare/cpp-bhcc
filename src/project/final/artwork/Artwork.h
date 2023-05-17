@@ -2,8 +2,8 @@
 #define BHCC_CPP_ARTWORK_H
 
 #include <iostream>
-#include "../util/Date.h"
-#include "../util/Name.h"
+#include "../common/Date.h"
+#include "../common/Name.h"
 
 /**
  * An abstract class.
@@ -25,13 +25,23 @@ protected:
     // The description of this artwork.
     std::string description;
 public:
-    Artwork(Name artist, Date created, Date acquired, Name donatedBy);
+    /**
+     * Creates an artwork.
+     * @param artist the name of the artist of this artwork.
+     * @param created the date this artwork was created.
+     * @param acquired the date this artwork was acquired from the donor.
+     * @param donatedBy the name of the donor.
+     * @param description the description of this artwork.
+     */
+    Artwork(Name artist, Date created, Date acquired, Name donatedBy, std::string description);
 
     const Name getArtist() const { return artist; }
 
     const Date getCreated() const { return created; }
 
     const Date getAcquired() const { return acquired; }
+
+    const Name getDonatedBy() const { return donatedBy; }
 
     const std::string getDescription() const { return description; }
 
@@ -57,7 +67,6 @@ public:
 
     friend std::ostream &operator<<(std::ostream &, Artwork &);
 };
-
 
 
 #endif
