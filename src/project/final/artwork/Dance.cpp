@@ -12,13 +12,13 @@ Dance::Dance(Name artist, Date created, Date acquired, Name donatedBy, std::stri
 
 double Dance::value() {
     // age in years * timeInHours / 60.
-    return getAge() * length.getHours() / 60;
+    return getAge() * length.getMinutes() / 60;
 }
 
 std::string Dance::toString() {
     std::stringstream ss;
 
-    ss << "[Dance] "
+    ss << "[Dance] $" << value() << std::endl
        << "Artist: " << artist.toString() << ";" << std::endl
        << "Created date: " << created.toString() << ";" << std::endl
        << "Acquired date: " << acquired.toString() << ";" << std::endl
@@ -37,7 +37,7 @@ std::istream &operator>>(std::istream &is, Dance &dance) {
 }
 
 std::ostream &operator<<(std::ostream &os, Dance &dance) {
-    os << static_cast<Artwork&>(dance);
+    os << static_cast<Artwork &>(dance);
     os << dance.performedBy << dance.length;
 
     return os;

@@ -91,11 +91,11 @@ inline void test(std::string testName, const std::function<void()> &testFunction
 template<typename T>
 inline void expect(T value, T expectedValue) {
     if (value == expectedValue) {
-        std::cout << "TEST PASS: [ \"" << value << "\" ]" << std::endl;
+        std::cout << "TEST PASS: [ " << value << " ]" << std::endl;
     } else {
         std::cout << "TEST FAIL: " << std::endl;
-        std::cout << "Expected value: [ \"" << expectedValue << "\" ]" << std::endl;
-        std::cout << "Given value:    [ \"" << value << "\" ]" << std::endl;
+        std::cout << "Expected value: [ " << expectedValue << " ]" << std::endl;
+        std::cout << "Given value:    [ " << value << " ]" << std::endl;
         exit(1);
     }
 }

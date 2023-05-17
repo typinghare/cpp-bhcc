@@ -21,7 +21,7 @@ double Painting::value() {
 std::string Painting::toString() {
     std::stringstream ss;
 
-    ss << "[Painting] "
+    ss << "[Painting] $" << value() << std::endl
        << "Artist: " << artist.toString() << ";" << std::endl
        << "Created date: " << created.toString() << ";" << std::endl
        << "Acquired date: " << acquired.toString() << ";" << std::endl

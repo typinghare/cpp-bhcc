@@ -1,6 +1,6 @@
 /**
  * @author Zhuojian Chen (James)
- * @date May 8, 2023
+ * @date May 8, 2023 ~ May 17, 2023
  *
  * @document https://docs.google.com/document/d/10v-g-SEaB8brHoszFjoMtH-h2lQMoTOvo3-GjtTGIP0
  *
@@ -9,8 +9,8 @@
  * 2. Your classes must overload the stream output operator.
  * 3. Implement value() method for all artwork classes.
  * 4. Overload comparison operators (==, !=, <, >, <=, >=) for all artwork classes.
- * 5. *Create a template to find the minimum value; test it.
- * 6. *Create a template to find the maximum value; test it.
+ * 5. Create a template to find the minimum value; test it.
+ * 6. Create a template to find the maximum value; test it.
  * 7. *Write a function in "museum" file (driver program) that demonstrates polymorphism.
  * 8. *Classes should throw exceptions for invalid inputs, and catch and handle those exceptions.
  * 9. *Write information from "Museum" to a text file.
@@ -20,6 +20,17 @@
  * 2. Use self-documenting method names and variables.
  * 3. Use smart pointers where appropriate.
  * 4. Delete allocated memory out of smart pointers.
+ *
+ * @explanation
+ * 1. The value of Dance, which is obtained by "age in years * timeInHours/60" seems to be
+ * incorrect, because a dance typically lasts for only a few hours, resulting in a very small value
+ * for "timeInHours/60". Therefore, I changed the "timeInHours" to "timeInMinutes" when computing.
+ *
+ *
+ * @references
+ * https://www.programiz.com/cpp-programming/pure-virtual-funtion
+ * https://en.cppreference.com/w/cpp/language/lambda
+ * https://en.cppreference.com/w/cpp/language/fold
 */
 
 #include <iostream>
@@ -33,7 +44,7 @@
 
 using namespace std;
 
-string artworkToString(Artwork &artwork);
+string artworkToString(Artwork *artwork);
 
 template<typename T>
 T findMinValueArtwork(T *artworkArray, int length);
@@ -51,6 +62,7 @@ void testCommonTime();
 
 /**
  * Driver program.
+ * @see https://www.name-generator.org.uk/quick/
  */
 int main() {
     // Test common classes.
@@ -60,10 +72,31 @@ int main() {
     testCommonTime();
 
     // Test museum.
+    // Create 6 artworks (Dance, Painting, and WrittenWord).
+    Dance dance1(
+        Name("Oliwia", "Herman"),
+        Date(1, 5, 1870),
+        Date(4, 29, 1911),
+        Name(true),
+        "A graceful and energetic dance.",
+        "Haygrace",
+        Time(1, 27, 30)
+    );
+
+    Dance dance2(
+        Name("Lauren", "Guerrero"),
+        Date(4, 19, 1920),
+        Date(7, 16, 2005),
+        Name("Katerina", "Kelley"),
+        "A dynamic and captivating dance performance.",
+        "WhiteSwan",
+        Time(3, 16, 0)
+    );
+
     Painting painting1(
         Name("Will", "Barron"),
-        Date(4, 9, 1920),
-        Date(7, 16, 2005),
+        Date(2, 1, 1938),
+        Date(12, 10, 1985),
         Name("Christopher", "Zamora"),
         "An excellent pastoral painting.",
         Painting::Medium::WATERCOLOR,
@@ -71,16 +104,55 @@ int main() {
     );
 
     Painting painting2(
-        Name("Will", "Barron"),
+        Name("Angelo", "Moreno"),
         Date(4, 9, 1920),
-        Date(7, 16, 2005),
-        Name("Christopher", "Zamora"),
+        Date(3, 12, 1970),
+        Name("Gertrude", "Fox"),
         "An excellent pastoral painting.",
         Painting::Medium::WATERCOLOR,
-        Dimensions(3.7, 2.1)
+        Dimensions(2.7, 1.8)
     );
 
-    cout << (painting1 > painting2) << endl;
+    WrittenWord writtenWord1(
+        Name("Imogen", "Doyle"),
+        Date(2, 1, 1765),
+        Date(6, 8, 1959),
+        Name("Seamus", "Burch"),
+        "Mr. Doyle's research manuscript",
+        WrittenWord::Genre::ANTHOLOGY,
+        265
+    );
+
+    WrittenWord writtenWord2(
+        Name("Colin", "Mcknight"),
+        Date(10, 29, 1820),
+        Date(11, 6, 1997),
+        Name("Sophie", "O'Reilly"),
+        "Mr. Mcknight's autobiography.",
+        WrittenWord::Genre::AUTOBIOGRAPHY,
+        169
+    );
+
+    Dance::numberOfDanceItems = 2;
+    Painting::numberOfPaintings = 2;
+    WrittenWord::numberOfWrittenWordItems = 2;
+
+    const int ARTWORK_SIZE = 6;
+    Artwork *artworksInMuseum[ARTWORK_SIZE] = {
+        &dance1, &painting1, &writtenWord1,
+        &dance2, &painting2, &writtenWord2
+    };
+
+    // Print all artwork in the museum.
+    for (int i = 0; i < ARTWORK_SIZE; ++i) {
+        cout << artworkToString(artworksInMuseum[i]) << endl;
+    }
+
+    // Test `minValueArtwork` and `minValueArtwork`.
+    Artwork *minValueArtwork = findMinValueArtwork(artworksInMuseum, ARTWORK_SIZE);
+    Artwork *maxValueArtwork = findMaxValueArtwork(artworksInMuseum, ARTWORK_SIZE);
+    cout << "The minimum value among all artworks: $" << minValueArtwork->value() << endl;
+    cout << "The maximum value among all artworks: $" << maxValueArtwork->value() << endl;
 }
 
 /**
@@ -89,16 +161,23 @@ int main() {
  * @return a description text about the artwork.
  * @remark This function is intended to demonstrate polymorphism.
  */
-string artworkToString(Artwork &artwork) {
-    return artwork.toString();
+string artworkToString(Artwork *artwork) {
+    return artwork->toString();
 }
 
+/**
+ * Finds a returns the artwork with minimum value from an array of artwork.
+ * @tparam T the artwork template.
+ * @param artworkArray the artwork array to find.
+ * @param length the length of the artwork array.
+ * @return the artwork with minimum value from an array of artwork.
+ */
 template<typename T>
 T findMinValueArtwork(T *artworkArray, int length) {
     T minValueArtwork = artworkArray[0];
 
     for (int i = 1; i < length; i++) {
-        if (artworkArray[i].value() < minValueArtwork.value()) {
+        if (artworkArray[i]->value() < minValueArtwork->value()) {
             minValueArtwork = artworkArray[i];
         }
     }
@@ -106,12 +185,19 @@ T findMinValueArtwork(T *artworkArray, int length) {
     return minValueArtwork;
 }
 
+/**
+ * Finds a returns the artwork with maximum value from an array of artwork.
+ * @tparam T the artwork template.
+ * @param artworkArray the artwork array to find.
+ * @param length the length of the artwork array.
+ * @return the artwork with maximum value from an array of artwork.
+ */
 template<typename T>
 T findMaxValueArtwork(T *artworkArray, int length) {
     T maxValueArtwork = artworkArray[0];
 
     for (int i = 1; i < length; i++) {
-        if (artworkArray[i].value() < maxValueArtwork.value()) {
+        if (artworkArray[i]->value() > maxValueArtwork->value()) {
             maxValueArtwork = artworkArray[i];
         }
     }

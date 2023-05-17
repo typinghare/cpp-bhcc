@@ -30,7 +30,7 @@ double WrittenWord::value() {
 std::string WrittenWord::toString() {
     std::stringstream ss;
 
-    ss << "[Written word] "
+    ss << "[Written word] $" << value() << std::endl
        << "Artist: " << artist.toString() << ";" << std::endl
        << "Created date: " << created.toString() << ";" << std::endl
        << "Acquired date: " << acquired.toString() << ";" << std::endl
