@@ -70,23 +70,49 @@ inline void streamInput(T &object, std::string streamString) {
 inline void test(std::string testName, const std::function<void()> &testFunction) {
     std::cout << "TestBegin [" << testName << "]" << std::endl;
 
-    testFunction();
+    try {
+        testFunction();
+    } catch (const std::exception &e) {
+        std::cout << "Test failed due to an encountered exception: " << std::endl;
+        std::cout << e.what() << std::endl;
+
+        exit(1);
+    }
 
     std::cout << "TestEnd [" << testName << "]" << std::endl << std::endl;
 }
 
 /**
  * Program exits if the given value is not equal to the expected value.
+ * @tParam T template type of the value and expected value.
  * @param value the real/given value.
  * @param expectedValue the expected value.
  */
-inline void expect(std::string value, std::string expectedValue) {
+template<typename T>
+inline void expect(T value, T expectedValue) {
     if (value == expectedValue) {
-        std::cout << "TEST PASS: [ " << value << " ]" << std::endl;
+        std::cout << "TEST PASS: [ \"" << value << "\" ]" << std::endl;
     } else {
         std::cout << "TEST FAIL: " << std::endl;
-        std::cout << "Expected value: [ " << expectedValue << " ]" << std::endl;
-        std::cout << "Given value:    [ " << value << " ]" << std::endl;
+        std::cout << "Expected value: [ \"" << expectedValue << "\" ]" << std::endl;
+        std::cout << "Given value:    [ \"" << value << "\" ]" << std::endl;
+        exit(1);
+    }
+}
+
+/**
+ * Program exits if the given value is not equal to the expected value.
+ * @tParam T template type of the value and expected value.
+ * @param value the real/given value.
+ * @param expectedValue the expected value.
+ */
+inline void expect(const std::string value, const std::string expectedValue) {
+    if (value == expectedValue) {
+        std::cout << "TEST PASS: [ \"" << value << "\" ]" << std::endl;
+    } else {
+        std::cout << "TEST FAIL: " << std::endl;
+        std::cout << "Expected value: [ \"" << expectedValue << "\" ]" << std::endl;
+        std::cout << "Given value:    [ \"" << value << "\" ]" << std::endl;
         exit(1);
     }
 }

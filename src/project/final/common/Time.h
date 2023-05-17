@@ -36,7 +36,8 @@ public:
      * Returns a string of time.
      * @example "3:05:23"
      * @example "40:23"
-     * @example "00:29"
+     * @example "9:10"
+     * @example "0:29"
      */
     std::string toString();
 

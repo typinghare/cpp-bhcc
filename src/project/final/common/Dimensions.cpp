@@ -1,14 +1,15 @@
 #include "Dimensions.h"
 #include <string>
-#include "../util/helper.h"
+#include <iomanip>
+#include <sstream>
 
 void Dimensions::checkMemberVariables() {
     if (width <= 0) {
-        throw new std::invalid_argument("The width should be a positive integer!");
+        throw std::invalid_argument("The width should be a positive integer!");
     }
 
     if (height <= 0) {
-        throw new std::invalid_argument("The height should be a positive integer!");
+        throw std::invalid_argument("The height should be a positive integer!");
     }
 }
 
@@ -20,7 +21,10 @@ Dimensions::Dimensions(double width, double height) {
 }
 
 const std::string Dimensions::toString() const {
-    return std::to_string(height) + "ft × " + std::to_string(width) + "ft";
+    std::stringstream ss;
+    ss << std::fixed << std::setprecision(2) << width << "ft × " << height << "ft";
+
+    return ss.str();
 }
 
 std::istream &operator>>(std::istream &is, Dimensions &dimensions) {
@@ -32,5 +36,5 @@ std::istream &operator>>(std::istream &is, Dimensions &dimensions) {
 }
 
 std::ostream &operator<<(std::ostream &os, Dimensions &dimensions) {
-    return os << joinWithSpace(dimensions.width, dimensions.height);
+    return os << std::fixed << std::setprecision(2) << dimensions.width << ' ' << dimensions.height;
 }

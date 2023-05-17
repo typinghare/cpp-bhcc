@@ -7,14 +7,14 @@ using namespace std;
 void Date::checkMemberVariables() {
     // Validate month.
     if (month < 1 || month > 12) {
-        throw new invalid_argument(
+        throw invalid_argument(
             "Month should be between 1 and 12, but " + to_string(month) + " is given."
         );
     }
 
     // Validate year.
     if (year < 100 || year > CURRENT_YEAR) {
-        throw new invalid_argument(
+        throw invalid_argument(
             "Year should be between 100 and " + to_string(CURRENT_YEAR) + ", but "
             + to_string(year) + " is given."
         );
@@ -23,7 +23,7 @@ void Date::checkMemberVariables() {
     // Validate day.
     short correctDay = DAYS_IN_MONTH[month - 1];
     if (day < 1 || day > correctDay) {
-        throw new invalid_argument(
+        throw invalid_argument(
             "The day in " + to_string(month) + "should be " + to_string(correctDay)
             + ", but" + to_string(day) + " is given."
         );

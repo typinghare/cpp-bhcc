@@ -18,12 +18,18 @@ private:
     std::string lastName;
 public:
     /**
-     * Creates an anonymous person.
+     * Creates an non-anonymous name.
      */
-    Name() { isAnonymous = true; }
+    Name(): Name(false) {};
 
     /**
-     * Creates a non-anonymous person.
+     * Creates a name.
+     * @param isAnonymous whether it is anonymous.
+     */
+    Name(bool isAnonymous) { this->isAnonymous = isAnonymous; }
+
+    /**
+     * Creates a non-anonymous name.
      * @param firstName first name;
      * @param lastName last name;
      */

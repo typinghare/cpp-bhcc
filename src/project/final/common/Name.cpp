@@ -11,7 +11,7 @@ Name::Name(std::string firstName, std::string lastName) {
 
 const std::string Name::toString() const {
     if (isAnonymous) {
-        return "[Anonymous]";
+        return Name::ANONYMOUS_LABEL;
     } else {
         return firstName + " " + lastName;
     }
@@ -32,7 +32,5 @@ std::istream &operator>>(std::istream &is, Name &name) {
 }
 
 std::ostream &operator<<(std::ostream &os, Name &name) {
-    return name.isAnonymous ?
-           os << joinWithSpace(Name::ANONYMOUS_LABEL) :
-           os << joinWithSpace(name.firstName, name.lastName);
+    return os << name.toString();
 }

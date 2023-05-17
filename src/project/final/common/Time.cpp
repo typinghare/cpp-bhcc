@@ -7,13 +7,13 @@ using namespace std;
 
 void Time::checkMemberVariables() {
     if (hours < 0) {
-        throw new invalid_argument("The hours should be a whole number!");
+        throw invalid_argument("The hours should be a whole number!");
     }
     if (minutes < 0) {
-        throw new invalid_argument("The minutes should be a whole number!");
+        throw invalid_argument("The minutes should be a whole number!");
     }
     if (seconds < 0) {
-        throw new invalid_argument("The seconds should be a whole number!");
+        throw invalid_argument("The seconds should be a whole number!");
     }
 }
 
@@ -30,12 +30,14 @@ Time::Time(int minutes, int seconds) : Time(0, minutes, seconds) {}
 Time::Time(int seconds) : Time(0, 0, seconds) {}
 
 string Time::toString() {
-    string minutesStr = minutes >= 10 ? to_string(minutes) : "0" + to_string(minutes);
+    string minutesStr = hours > 0 ?
+                        (minutes >= 10 ? to_string(minutes) : "0" + to_string(minutes)) :
+                        to_string(minutes);
     string secondsStr = seconds >= 10 ? to_string(seconds) : "0" + to_string(seconds);
 
     stringstream ss;
     if (hours > 0) ss << to_string(hours) << ":";
-    ss << to_string(minutes) << ":" << to_string(seconds);
+    ss << minutesStr << ":" << secondsStr;
 
     return ss.str();
 }

@@ -66,6 +66,19 @@ public:
     friend std::istream &operator>>(std::istream &, Artwork &);
 
     friend std::ostream &operator<<(std::ostream &, Artwork &);
+
+    // Overload comparison operators.
+    bool operator!=(Artwork &artwork) { return value() != artwork.value(); }
+
+    bool operator==(Artwork &artwork) { return value() == artwork.value(); }
+
+    bool operator<(Artwork &artwork) { return value() < artwork.value(); }
+
+    bool operator>(Artwork &artwork) { return value() > artwork.value(); }
+
+    bool operator<=(Artwork &artwork) { return value() <= artwork.value(); }
+
+    bool operator>=(Artwork &artwork) { return value() >= artwork.value(); }
 };
 
 
