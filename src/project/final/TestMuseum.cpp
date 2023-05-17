@@ -7,6 +7,10 @@
  *
 */
 
+/**
+ * Museum tests.
+ * @return
+ */
 int main() {
 
 }

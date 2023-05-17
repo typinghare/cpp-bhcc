@@ -4,6 +4,9 @@
 #include "Artwork.h"
 #include "../util/Dimensions.h"
 
+/**
+ * A painting artwork.
+ */
 class Painting : public Artwork {
 public:
     enum Medium {
@@ -16,7 +19,8 @@ private:
     Medium medium;
     Dimensions dimensions;
 public:
-    Painting(Name artist, Date created, Date acquired, Name donatedBy, Medium medium, Dimensions dimensions);
+    Painting(Name artist, Date created, Date acquired, Name donatedBy, Medium medium,
+             Dimensions dimensions);
 
     const Medium getMedium() const { return medium; }
 
@@ -25,8 +29,20 @@ public:
     double value() override;
 
     std::string toString() override;
+
+    friend std::istream &operator>>(std::istream &, Painting &);
+
+    friend std::ostream &operator<<(std::ostream &, Painting &);
 };
 
+/**
+ * Convert a medium to string.
+ */
 std::string toMediumString(Painting::Medium medium);
+
+/**
+ * Convert a string to medium.
+ */
+Painting::Medium parseMediumString(std::string mediumString);
 
 #endif

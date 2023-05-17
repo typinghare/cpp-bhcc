@@ -12,14 +12,23 @@ public:
 
     static int numberOfWrittenWordItems;
 private:
+    Genre genre;
     int numPages;
 public:
-    WrittenWord(Name artist, Date created, Date acquired, Name donatedBy, int numPages);
+    WrittenWord(Name artist, Date created, Date acquired, Name donatedBy, Genre genre,
+                int numPages);
 
     double value() override;
 
-    std::string toString() override;
-};
+    Genre getGenre() const { return genre; }
 
+    int getNumPages() const { return numPages; }
+
+    std::string toString() override;
+
+    friend std::istream &operator>>(std::istream &, WrittenWord &);
+
+    friend std::ostream &operator<<(std::ostream &, WrittenWord &);
+};
 
 #endif

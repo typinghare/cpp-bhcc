@@ -71,7 +71,6 @@ int daysAfterBirth(Date birthDate) {
     return ans;
 }
 
-
 std::string Date::toString() {
     string monthString = month >= 10 ? to_string(month) : '0' + to_string(month);
     string dayString = day >= 10 ? to_string(day) : '0' + to_string(day);

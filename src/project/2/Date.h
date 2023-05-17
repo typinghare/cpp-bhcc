@@ -34,10 +34,4 @@ public:
     std::string toString();
 };
 
-/**
- * Returns the number of days from the birth date to today's date.
- * @param birthDate the birth date.
- */
-int daysAfterBirth(Date birthDate);
-
 #endif

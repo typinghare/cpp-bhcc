@@ -1,5 +1,6 @@
 #include "Painting.h"
 #include <sstream>
+#include<string>
 
 int Painting::numberOfPaintings = 0;
 
@@ -13,6 +14,7 @@ Painting::Painting(Name artist, Date created, Date acquired, Name donatedBy, Med
 }
 
 double Painting::value() {
+    // age in years * area in square feet
     return getAge() * dimensions.getArea();
 }
 
@@ -32,4 +34,32 @@ std::string Painting::toString() {
 
 std::string toMediumString(Painting::Medium medium) {
     return Painting::mediumString[medium];
+}
+
+Painting::Medium parseMediumString(std::string mediumString) {
+    int size = sizeof(Painting::mediumString) / sizeof(Painting::mediumString[0]);
+    for (int i = 0; i < size; ++i) {
+        if (Painting::mediumString[i] == mediumString) {
+            return static_cast<Painting::Medium>(i);
+        }
+    }
+
+    throw new std::invalid_argument("Invalid medium string: " + mediumString);
+}
+
+std::istream &operator>>(std::istream &is, Painting &painting) {
+    is >> static_cast<Artwork &>(painting);
+    is >> painting.dimensions;
+
+    std::string mediumString;
+    is >> mediumString;
+    painting.medium = parseMediumString(mediumString);
+
+    return is;
+}
+
+std::ostream &operator<<(std::ostream &os, Painting &painting) {
+    os << painting.toString();
+
+    return os;
 }

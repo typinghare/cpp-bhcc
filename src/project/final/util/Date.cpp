@@ -22,21 +22,21 @@ Date::Date(short month, short day, short year) {
 }
 
 void Date::checkDay() {
-    // validate month
+    // Validate month.
     if (month < 1 || month > 12) {
         throw new invalid_argument(
             "Month should be between 1 and 12, but " + to_string(month) + " is given."
         );
     }
 
-    // validate year
+    // Validate year.
     if (year < 100 || year > 3000) {
         throw new invalid_argument(
             "Year should be between 100 and 3000, but " + to_string(year) + " is given."
         );
     }
 
-    // validate date
+    // Validate day.
     short correctDay = DAYS_IN_MONTH[month - 1];
     if (day < 1 || day > correctDay) {
         throw new invalid_argument(
@@ -48,4 +48,14 @@ void Date::checkDay() {
 
 short Date::getYearsFromNow() const {
     return CURRENT_YEAR - year;
+}
+
+std::istream &operator>>(std::istream &is, Date &date) {
+    is >> date.month >> date.day >> date.year;
+
+    return is;
+}
+
+std::ostream &operator<<(std::ostream &os, Date &date) {
+    return os << date.toString();
 }

@@ -3,9 +3,20 @@
 
 #include <iostream>
 
+/**
+ * Current year.
+ */
 const short CURRENT_YEAR = 2023;
 
+/**
+ * A date including month, day, and year.
+ */
 class Date {
+public:
+    /**
+     * The number of days in every month.
+     */
+    constexpr static const short DAYS_IN_MONTH[12]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 private:
     short month;
     short day;
@@ -15,6 +26,7 @@ private:
      * Checks for valid date based on year and month.
      */
     void checkDay();
+
 public:
     Date();
 
@@ -33,9 +45,13 @@ public:
 
     /**
      * Returns the number of years between the year provided by this date and the current year;
-     * @return
      */
     short getYearsFromNow() const;
+
+    // The order : month, day, year.
+    friend std::istream &operator>>(std::istream &, Date &);
+
+    friend std::ostream &operator<<(std::ostream &, Date &);
 };
 
 #endif
