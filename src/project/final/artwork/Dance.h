@@ -32,6 +32,10 @@ public:
     Dance(Name artist, Date created, Date acquired, Name donatedBy, std::string description,
           std::string performedBy, Time length);
 
+    std::string getPerformedBy() const { return performedBy; }
+
+    Time getLength() const { return length; }
+
     double value() override;
 
     std::string toString() override;

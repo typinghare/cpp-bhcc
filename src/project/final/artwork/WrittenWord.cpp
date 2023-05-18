@@ -31,12 +31,12 @@ std::string WrittenWord::toString() {
     std::stringstream ss;
 
     ss << "[Written word] $" << value() << std::endl
-       << "Artist: " << artist.toString() << ";" << std::endl
-       << "Created date: " << created.toString() << ";" << std::endl
-       << "Acquired date: " << acquired.toString() << ";" << std::endl
-       << "Donated by: " << donatedBy.toString() << ";" << std::endl
-       << "Genre: " << toGenreString(genre) << ";" << std::endl
-       << "Number of pages: " << numPages << ";" << std::endl;
+       << "Artist: " << getArtist().toString() << ";" << std::endl
+       << "Created date: " << getCreated().toString() << ";" << std::endl
+       << "Acquired date: " << getAcquired().toString() << ";" << std::endl
+       << "Donated by: " << getDonatedBy().toString() << ";" << std::endl
+       << "Genre: " << toGenreString(getGenre()) << ";" << std::endl
+       << "Number of pages: " << getNumPages() << ";" << std::endl;
 
     return ss.str();
 }
@@ -59,14 +59,17 @@ WrittenWord::Genre parseGenreString(std::string genreString) {
 std::istream &operator>>(std::istream &is, WrittenWord &writtenWord) {
     is >> static_cast<Artwork &>(writtenWord);
 
+    std::string genreString;
+    is >> genreString;
+    writtenWord.genre = parseGenreString(genreString);
+
     is >> writtenWord.numPages;
 
     return is;
 }
 
 std::ostream &operator<<(std::ostream &os, WrittenWord &writtenWord) {
-    os << writtenWord.toString();
-
-    return os;
+    return os << static_cast<Artwork &>(writtenWord) << toGenreString(writtenWord.genre)
+              << writtenWord.numPages;
 }
 

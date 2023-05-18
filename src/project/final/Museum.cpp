@@ -5,13 +5,13 @@
  * @document https://docs.google.com/document/d/10v-g-SEaB8brHoszFjoMtH-h2lQMoTOvo3-GjtTGIP0
  *
  * @requirement
- * 1. *Create UMLs for all the classes.
+ * 1. Create UMLs for all the classes.
  * 2. Your classes must overload the stream output operator.
  * 3. Implement value() method for all artwork classes.
  * 4. Overload comparison operators (==, !=, <, >, <=, >=) for all artwork classes.
  * 5. Create a template to find the minimum value; test it.
  * 6. Create a template to find the maximum value; test it.
- * 7. *Write a function in "museum" file (driver program) that demonstrates polymorphism.
+ * 7. Write a function in "museum" file (driver program) that demonstrates polymorphism.
  * 8. *Classes should throw exceptions for invalid inputs, and catch and handle those exceptions.
  * 9. *Write information from "Museum" to a text file.
  *
@@ -25,7 +25,11 @@
  * 1. The value of Dance, which is obtained by "age in years * timeInHours/60" seems to be
  * incorrect, because a dance typically lasts for only a few hours, resulting in a very small value
  * for "timeInHours/60". Therefore, I changed the "timeInHours" to "timeInMinutes" when computing.
- *
+ * 2. I placed "Date", "Dimensions", "Name", and "Time" in the "common" directory. I also made some
+ * tests for them in the driver program.
+ * 3. I created some helpful functions, such as "joinWithSpace", "getStreamOutput", and "expect", in
+ * the "util/helper.h" to increase the reusability and readability of code. Another purpose is to
+ * apply the new knowledge from the last several classes.
  *
  * @references
  * https://www.programiz.com/cpp-programming/pure-virtual-funtion

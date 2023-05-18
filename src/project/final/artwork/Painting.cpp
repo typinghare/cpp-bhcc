@@ -22,12 +22,12 @@ std::string Painting::toString() {
     std::stringstream ss;
 
     ss << "[Painting] $" << value() << std::endl
-       << "Artist: " << artist.toString() << ";" << std::endl
-       << "Created date: " << created.toString() << ";" << std::endl
-       << "Acquired date: " << acquired.toString() << ";" << std::endl
-       << "Donated by: " << donatedBy.toString() << ";" << std::endl
-       << "Dimensions: " << dimensions.toString() << ";" << std::endl
-       << "Medium: " << toMediumString(medium) << ";" << std::endl;
+       << "Artist: " << getArtist().toString() << ";" << std::endl
+       << "Created date: " << getCreated().toString() << ";" << std::endl
+       << "Acquired date: " << getAcquired().toString() << ";" << std::endl
+       << "Donated by: " << getDonatedBy().toString() << ";" << std::endl
+       << "Dimensions: " << getDimensions().toString() << ";" << std::endl
+       << "Medium: " << toMediumString(getMedium()) << ";" << std::endl;
 
     return ss.str();
 }
@@ -59,7 +59,6 @@ std::istream &operator>>(std::istream &is, Painting &painting) {
 }
 
 std::ostream &operator<<(std::ostream &os, Painting &painting) {
-    os << painting.toString();
-
-    return os;
+    return os << static_cast<Artwork &>(painting) << toMediumString(painting.medium)
+              << painting.dimensions;
 }

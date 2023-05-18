@@ -7,13 +7,16 @@ using namespace std;
 
 void Time::checkMemberVariables() {
     if (hours < 0) {
-        throw invalid_argument("The hours should be a whole number!");
+        throw invalid_argument("The hours should be a whole number, but "
+                               + std::to_string(hours) + " is given.");
     }
     if (minutes < 0) {
-        throw invalid_argument("The minutes should be a whole number!");
+        throw invalid_argument("The minutes should be a whole number, but "
+                               + std::to_string(minutes) + " is given.");
     }
     if (seconds < 0) {
-        throw invalid_argument("The seconds should be a whole number!");
+        throw invalid_argument("The seconds should be a whole number, but "
+                               + std::to_string(seconds) + " is given.");
     }
 }
 
@@ -51,5 +54,5 @@ std::istream &operator>>(std::istream &is, Time &time) {
 }
 
 std::ostream &operator<<(std::ostream &os, Time &time) {
-    return os << joinWithSpace(time.hours, time.minutes, time.seconds);
+    return os << joinWithSpace(time.getHours(), time.getMinutes(), time.getSeconds());
 }

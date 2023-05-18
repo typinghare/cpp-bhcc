@@ -14,7 +14,7 @@ const short CURRENT_YEAR = 2023;
 class Date {
 public:
     /**
-     * The number of days in every month.
+     * The number of days in each month.
      */
     constexpr static const short DAYS_IN_MONTH[12]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 private:
@@ -41,10 +41,10 @@ public:
     /**
      * Returns a date string formatting as "MM-DD-YYYY".
      */
-    std::string toString();
+    std::string toString() const;
 
     /**
-     * Returns the number of years between the year provided by this date and the current year;
+     * Returns the number of years between the year provided by this date and the current year.
      */
     short getYearsFromNow() const;
 

@@ -30,7 +30,7 @@ void Date::checkMemberVariables() {
     }
 }
 
-std::string Date::toString() {
+std::string Date::toString() const {
     string monthString = month >= 10 ? to_string(month) : '0' + to_string(month);
     string dayString = day >= 10 ? to_string(day) : '0' + to_string(day);
 
@@ -58,5 +58,5 @@ std::istream &operator>>(std::istream &is, Date &date) {
 }
 
 std::ostream &operator<<(std::ostream &os, Date &date) {
-    return os << joinWithSpace(date.month, date.day, date.year);
+    return os << joinWithSpace(date.getMonth(), date.getDay(), date.getYear());
 }

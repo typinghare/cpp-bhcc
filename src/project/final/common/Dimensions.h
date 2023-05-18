@@ -32,7 +32,7 @@ public:
     const double getHeight() const { return height; }
 
     /**
-     * Returns the area of this dimensions in feet.
+     * Returns the area of this dimensions in feet square.
      */
     const double getArea() const { return width * height; }
 

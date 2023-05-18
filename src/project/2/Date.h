@@ -31,7 +31,7 @@ public:
     /**
      * Returns a date string formatting as "MM-DD-YYYY".
      */
-    std::string toString();
+    std::string toString() const;
 };
 
 #endif

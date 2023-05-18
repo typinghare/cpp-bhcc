@@ -19,12 +19,12 @@ std::string Dance::toString() {
     std::stringstream ss;
 
     ss << "[Dance] $" << value() << std::endl
-       << "Artist: " << artist.toString() << ";" << std::endl
-       << "Created date: " << created.toString() << ";" << std::endl
-       << "Acquired date: " << acquired.toString() << ";" << std::endl
-       << "Donated by: " << donatedBy.toString() << ";" << std::endl
-       << "Performed by: " << performedBy << ";" << std::endl
-       << "Length: " << length.toString() << ";" << std::endl;
+       << "Artist: " << getArtist().toString() << ";" << std::endl
+       << "Created date: " << getCreated().toString() << ";" << std::endl
+       << "Acquired date: " << getAcquired().toString() << ";" << std::endl
+       << "Donated by: " << getDonatedBy().toString() << ";" << std::endl
+       << "Performed by: " << getPerformedBy() << ";" << std::endl
+       << "Length: " << getLength().toString() << ";" << std::endl;
 
     return ss.str();
 }
@@ -37,8 +37,5 @@ std::istream &operator>>(std::istream &is, Dance &dance) {
 }
 
 std::ostream &operator<<(std::ostream &os, Dance &dance) {
-    os << static_cast<Artwork &>(dance);
-    os << dance.performedBy << dance.length;
-
-    return os;
+    return os << static_cast<Artwork &>(dance) << dance.performedBy << dance.length;
 }

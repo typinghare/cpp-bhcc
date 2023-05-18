@@ -5,11 +5,13 @@
 
 void Dimensions::checkMemberVariables() {
     if (width <= 0) {
-        throw std::invalid_argument("The width should be a positive integer!");
+        throw std::invalid_argument("The width should be a positive integer, but "
+                                    + std::to_string(width) + " is given.");
     }
 
     if (height <= 0) {
-        throw std::invalid_argument("The height should be a positive integer!");
+        throw std::invalid_argument("The height should be a positive integer, but "
+                                    + std::to_string(height) + " is given.");
     }
 }
 
@@ -22,7 +24,7 @@ Dimensions::Dimensions(double width, double height) {
 
 const std::string Dimensions::toString() const {
     std::stringstream ss;
-    ss << std::fixed << std::setprecision(2) << width << "ft × " << height << "ft";
+    ss << std::fixed << std::setprecision(2) << getWidth() << "ft × " << getHeight() << "ft";
 
     return ss.str();
 }
