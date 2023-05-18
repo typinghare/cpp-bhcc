@@ -22,6 +22,8 @@ private:
     // The dimensions of this painting.
     Dimensions dimensions;
 public:
+    Painting() {};
+
     /**
      * Creates a dance artwork.
      * @param artist the name of the artist of this painting.

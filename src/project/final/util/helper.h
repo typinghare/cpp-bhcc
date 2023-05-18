@@ -117,4 +117,17 @@ inline void expect(const std::string value, const std::string expectedValue) {
     }
 }
 
+/**
+ * Equivalent instanceof in Java.
+ * @tparam Base base class.
+ * @tparam T template.
+ * @param ptr class to check.
+ * @return true if *ptr instanceof Base
+ * @reference https://www.tutorialspoint.com/cplusplus-equivalent-of-instanceof
+ */
+template<typename Base, typename T>
+inline bool instanceof(const T *ptr) {
+    return dynamic_cast<const Base*>(ptr) != nullptr;
+}
+
 #endif

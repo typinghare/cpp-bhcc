@@ -1,4 +1,5 @@
 #include "Dance.h"
+#include "../util/helper.h"
 #include <sstream>
 
 int Dance::numberOfDanceItems = 0;
@@ -23,6 +24,7 @@ std::string Dance::toString() {
        << "Created date: " << getCreated().toString() << ";" << std::endl
        << "Acquired date: " << getAcquired().toString() << ";" << std::endl
        << "Donated by: " << getDonatedBy().toString() << ";" << std::endl
+       << "Description: " << getDescription() << ";" << std::endl
        << "Performed by: " << getPerformedBy() << ";" << std::endl
        << "Length: " << getLength().toString() << ";" << std::endl;
 
@@ -30,12 +32,15 @@ std::string Dance::toString() {
 }
 
 std::istream &operator>>(std::istream &is, Dance &dance) {
-    is >> static_cast<Artwork &>(dance);
-    is >> dance.performedBy >> dance.length;
-
-    return is;
+    try {
+        return is >> static_cast<Artwork &>(dance) >> dance.performedBy >> dance.length;
+    } catch (std::exception* e) {
+        std::cout << "Fail to create dance object: " << e->what() << std::endl;
+        exit(1);
+    }
 }
 
 std::ostream &operator<<(std::ostream &os, Dance &dance) {
-    return os << static_cast<Artwork &>(dance) << dance.performedBy << dance.length;
+    return os << static_cast<Artwork &>(dance) << ' '
+              << joinWithSpace(dance.performedBy, dance.length);
 }

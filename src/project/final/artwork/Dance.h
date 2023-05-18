@@ -19,6 +19,8 @@ private:
     // The length of this dance.
     Time length;
 public:
+    Dance() {};
+
     /**
      * Creates a dance artwork.
      * @param artist the name of the artist of this dance.

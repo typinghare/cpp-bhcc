@@ -26,6 +26,11 @@ protected:
     std::string description;
 public:
     /**
+     * Default constructor.
+     */
+    Artwork() {};
+
+    /**
      * Creates an artwork.
      * @param artist the name of the artist of this artwork.
      * @param created the date this artwork was created.

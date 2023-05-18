@@ -1,4 +1,5 @@
 #include "WrittenWord.h"
+#include "../util/helper.h"
 #include <sstream>
 
 int WrittenWord::numberOfWrittenWordItems = 0;
@@ -35,6 +36,7 @@ std::string WrittenWord::toString() {
        << "Created date: " << getCreated().toString() << ";" << std::endl
        << "Acquired date: " << getAcquired().toString() << ";" << std::endl
        << "Donated by: " << getDonatedBy().toString() << ";" << std::endl
+       << "Description: " << getDescription() << ";" << std::endl
        << "Genre: " << toGenreString(getGenre()) << ";" << std::endl
        << "Number of pages: " << getNumPages() << ";" << std::endl;
 
@@ -57,19 +59,22 @@ WrittenWord::Genre parseGenreString(std::string genreString) {
 }
 
 std::istream &operator>>(std::istream &is, WrittenWord &writtenWord) {
-    is >> static_cast<Artwork &>(writtenWord);
+    try {
+        is >> static_cast<Artwork &>(writtenWord);
 
-    std::string genreString;
-    is >> genreString;
-    writtenWord.genre = parseGenreString(genreString);
+        std::string genreString;
+        is >> genreString;
+        writtenWord.genre = parseGenreString(genreString);
 
-    is >> writtenWord.numPages;
-
-    return is;
+        return is >> writtenWord.numPages;
+    } catch (std::exception* e) {
+        std::cout << "Fail to create written word object: " << e->what() << std::endl;
+        exit(1);
+    }
 }
 
 std::ostream &operator<<(std::ostream &os, WrittenWord &writtenWord) {
-    return os << static_cast<Artwork &>(writtenWord) << toGenreString(writtenWord.genre)
-              << writtenWord.numPages;
+    return os << static_cast<Artwork &>(writtenWord) << ' '
+              << joinWithSpace(toGenreString(writtenWord.genre), writtenWord.numPages);
 }
 

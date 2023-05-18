@@ -19,6 +19,8 @@ private:
     // The number of pages of this written word.
     int numPages;
 public:
+    WrittenWord() {};
+
     /**
      * Creates a dance artwork.
      * @param artist the name of the artist of this written word.

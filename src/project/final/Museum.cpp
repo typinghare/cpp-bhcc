@@ -12,7 +12,7 @@
  * 5. Create a template to find the minimum value; test it.
  * 6. Create a template to find the maximum value; test it.
  * 7. Write a function in "museum" file (driver program) that demonstrates polymorphism.
- * 8. *Classes should throw exceptions for invalid inputs, and catch and handle those exceptions.
+ * 8. Classes should throw exceptions for invalid inputs, and catch and handle those exceptions.
  * 9. *Write information from "Museum" to a text file.
  *
  * @notice
@@ -35,6 +35,8 @@
  * https://www.programiz.com/cpp-programming/pure-virtual-funtion
  * https://en.cppreference.com/w/cpp/language/lambda
  * https://en.cppreference.com/w/cpp/language/fold
+ * https://en.cppreference.com/w/cpp/language/dynamic_cast
+ * https://www.tutorialspoint.com/cplusplus-equivalent-of-instanceof
 */
 
 #include <iostream>
@@ -45,16 +47,9 @@
 #include "./artwork/Dance.h"
 #include "./artwork/Painting.h"
 #include "./artwork/WrittenWord.h"
+#include <fstream>
 
 using namespace std;
-
-string artworkToString(Artwork *artwork);
-
-template<typename T>
-T findMinValueArtwork(T *artworkArray, int length);
-
-template<typename T>
-T findMaxValueArtwork(T *artworkArray, int length);
 
 void testCommonDate();
 
@@ -63,6 +58,18 @@ void testCommonDimensions();
 void testCommonName();
 
 void testCommonTime();
+
+string artworkToString(Artwork *artwork);
+
+template<typename T>
+T findMinValueArtwork(T *artworkArray, int size);
+
+template<typename T>
+T findMaxValueArtwork(T *artworkArray, int size);
+
+void writeFile(string filepath, Artwork *artworkArray[], int size);
+
+Artwork **readFile(string filepath, int size);
 
 /**
  * Driver program.
@@ -141,22 +148,36 @@ int main() {
     Painting::numberOfPaintings = 2;
     WrittenWord::numberOfWrittenWordItems = 2;
 
-    const int ARTWORK_SIZE = 6;
-    Artwork *artworksInMuseum[ARTWORK_SIZE] = {
+    const int NUM_ARTWORK = 6;
+    Artwork *artworksInMuseum[NUM_ARTWORK] = {
         &dance1, &painting1, &writtenWord1,
         &dance2, &painting2, &writtenWord2
     };
 
     // Print all artwork in the museum.
-    for (int i = 0; i < ARTWORK_SIZE; ++i) {
+    for (int i = 0; i < NUM_ARTWORK; ++i) {
         cout << artworkToString(artworksInMuseum[i]) << endl;
     }
 
     // Test `minValueArtwork` and `minValueArtwork`.
-    Artwork *minValueArtwork = findMinValueArtwork(artworksInMuseum, ARTWORK_SIZE);
-    Artwork *maxValueArtwork = findMaxValueArtwork(artworksInMuseum, ARTWORK_SIZE);
+    Artwork *minValueArtwork = findMinValueArtwork(artworksInMuseum, NUM_ARTWORK);
+    Artwork *maxValueArtwork = findMaxValueArtwork(artworksInMuseum, NUM_ARTWORK);
     cout << "The minimum value among all artworks: $" << minValueArtwork->value() << endl;
     cout << "The maximum value among all artworks: $" << maxValueArtwork->value() << endl;
+
+    // Write the array `artworksInMuseum` to a text file.
+    const string TEXT_FILE_FILEPATH = "museum.txt";
+    cout << endl << "Writing artworks in the museum to the text file." << endl;
+    writeFile(TEXT_FILE_FILEPATH, artworksInMuseum, NUM_ARTWORK);
+    cout << "Wrote artworks in the museum to the text file successfully." << endl;
+
+    // Reads array from the text file.
+    cout << endl << "Reading artworks from the text file." << endl;
+    Artwork **artworkArray = readFile(TEXT_FILE_FILEPATH, NUM_ARTWORK);
+    cout << "Read artworks from the text file successfully." << endl;
+    for (int i = 0; i < NUM_ARTWORK; ++i) {
+        cout << (*artworkArray[i]).toString() << endl;
+    }
 }
 
 /**
@@ -173,14 +194,14 @@ string artworkToString(Artwork *artwork) {
  * Finds a returns the artwork with minimum value from an array of artwork.
  * @tparam T the artwork template.
  * @param artworkArray the artwork array to find.
- * @param length the length of the artwork array.
+ * @param size the size of the artwork array.
  * @return the artwork with minimum value from an array of artwork.
  */
 template<typename T>
-T findMinValueArtwork(T *artworkArray, int length) {
+T findMinValueArtwork(T *artworkArray, int size) {
     T minValueArtwork = artworkArray[0];
 
-    for (int i = 1; i < length; i++) {
+    for (int i = 1; i < size; i++) {
         if (artworkArray[i]->value() < minValueArtwork->value()) {
             minValueArtwork = artworkArray[i];
         }
@@ -197,16 +218,71 @@ T findMinValueArtwork(T *artworkArray, int length) {
  * @return the artwork with maximum value from an array of artwork.
  */
 template<typename T>
-T findMaxValueArtwork(T *artworkArray, int length) {
+T findMaxValueArtwork(T *artworkArray, int size) {
     T maxValueArtwork = artworkArray[0];
 
-    for (int i = 1; i < length; i++) {
+    for (int i = 0; i < size; i++) {
         if (artworkArray[i]->value() > maxValueArtwork->value()) {
             maxValueArtwork = artworkArray[i];
         }
     }
 
     return maxValueArtwork;
+}
+
+void writeFile(string filepath, Artwork *artworkArray[], int size) {
+    // create and open a text file
+    ofstream fileOutputStream(filepath);
+
+    for (int i = 0; i < size; i++) {
+        Artwork *artwork = artworkArray[i];
+
+        if (instanceof<Dance>(artwork)) {
+            fileOutputStream << "Dance " << *dynamic_cast<Dance *>(artwork) << endl;
+        } else if (instanceof<Painting>(artwork)) {
+            fileOutputStream << "Painting " << *dynamic_cast<Painting *>(artwork) << endl;
+        } else if (instanceof<WrittenWord>(artwork)) {
+            fileOutputStream << "WrittenWord " << *dynamic_cast<WrittenWord *>(artwork) << endl;
+        } else {
+            throw runtime_error("Unknown artwork type.");
+        }
+    }
+
+    fileOutputStream.close();
+}
+
+Artwork **readFile(string filepath, int size) {
+    ifstream fileInputStream(filepath);
+
+    Artwork **artworkArray = new Artwork *[size];
+    for (int i = 0; i < size; i++) {
+        string line;
+        getline(fileInputStream, line);
+
+        string className;
+        stringstream ss(line);
+        ss >> className;
+        if (className == "Dance") {
+            Dance *dance = new Dance();
+            ss >> *dance;
+
+            artworkArray[i] = dance;
+        } else if (className == "Painting") {
+            Painting *painting = new Painting();
+            ss >> *painting;
+
+            artworkArray[i] = painting;
+        } else if (className == "WrittenWord") {
+            WrittenWord *writtenWord = new WrittenWord();
+            ss >> *writtenWord;
+
+            artworkArray[i] = writtenWord;
+        } else {
+            throw runtime_error("Unknown artwork type: [ " + className + " ].");
+        }
+    }
+
+    return artworkArray;
 }
 
 void testCommonDate() {

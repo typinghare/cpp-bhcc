@@ -1,4 +1,5 @@
 #include "Painting.h"
+#include "../util/helper.h"
 #include <sstream>
 #include<string>
 
@@ -26,6 +27,7 @@ std::string Painting::toString() {
        << "Created date: " << getCreated().toString() << ";" << std::endl
        << "Acquired date: " << getAcquired().toString() << ";" << std::endl
        << "Donated by: " << getDonatedBy().toString() << ";" << std::endl
+       << "Description: " << getDescription() << ";" << std::endl
        << "Dimensions: " << getDimensions().toString() << ";" << std::endl
        << "Medium: " << toMediumString(getMedium()) << ";" << std::endl;
 
@@ -48,17 +50,21 @@ Painting::Medium parseMediumString(std::string mediumString) {
 }
 
 std::istream &operator>>(std::istream &is, Painting &painting) {
-    is >> static_cast<Artwork &>(painting);
-    is >> painting.dimensions;
+    try {
+        is >> static_cast<Artwork &>(painting) >> painting.dimensions;
 
-    std::string mediumString;
-    is >> mediumString;
-    painting.medium = parseMediumString(mediumString);
+        std::string mediumString;
+        is >> mediumString;
+        painting.medium = parseMediumString(mediumString);
 
-    return is;
+        return is;
+    } catch (std::exception* e) {
+        std::cout << "Fail to create painting object: " << e->what() << std::endl;
+        exit(1);
+    }
 }
 
 std::ostream &operator<<(std::ostream &os, Painting &painting) {
-    return os << static_cast<Artwork &>(painting) << toMediumString(painting.medium)
-              << painting.dimensions;
+    return os << static_cast<Artwork &>(painting) << ' '
+              << joinWithSpace(painting.medium, painting.dimensions);
 }
